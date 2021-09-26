@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { VictoryPie } from "victory-native";
 const ContributionsSection = () => {
-  graphicData = [
+  const graphicData = [
     { y: 25, x: 'Tech'},
     { y: 25, x: 'Operations'},
     { y: 25, x: 'Content'},
     { y: 25, x: 'Creative'},
     ]
-    graphicColor = ['#0066cc', '#00e6e6', '#b3edff', '#00b3b3']
+    const graphicColor = ['#0066cc', '#00e6e6', '#b3edff', '#00b3b3']
     return (
       <View style={styles.titleText,styles.VictoryPie}>
           <Text style={{right:'10%',fontSize:'30',fontFamily: "Arial",color: 'black',}} >Contributions</Text>
