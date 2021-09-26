@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView, RefreshControl } from 'react-native';
 // import { FlatList } from 'react-native-gesture-handler';
-
+// import Ranklist component in app.js to render
 var DATA = [
   {"name": "Jonny Singh", id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba', rank: 1},
   {"name": "Robin Quinn", id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bb', rank: 2},
