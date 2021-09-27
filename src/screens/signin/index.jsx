@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     container:
     {
         flex: 1,
-        width: wp('90%'),
+        width: wp('91%'),
         justifyContent: 'space-between',
         padding: wp('10%'),
         height: hp('80%'),
