@@ -3,6 +3,10 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView, RefreshControl } from 'react-native';
 // import { FlatList } from 'react-native-gesture-handler';
 // import Ranklist component in app.js to render
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 var DATA = [
   {"name": "Jonny Singh", id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba', rank: 1},
   {"name": "Robin Quinn", id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bb', rank: 2},
@@ -48,21 +52,29 @@ export default function RankList() {
   const Item = ({item})=>{
     
     return (
-      <>
+      <View style= {{marginLeft: wp("5%"),}}>
         <View style={styles.tile}>
           <View style={styles.leading}>
-            <Text style={{fontSize: 35, color: "white"}}>{item.rank}</Text>
+            <Text style={{fontSize: hp("3"), color: "white"}}>{item.rank}</Text>
           </View>
           <Text style={styles.tiletext}>{item.name}</Text>
         </View>
         <RenderLine rank={item.rank} />
-      </>
+      </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <FlatList data={DATA} renderItem={Item} keyExtractor = {item =>item.id} refreshControl={<RefreshControl onRefresh={onRefresh} colors={['#ff0000', '#00ff00', '#0000ff']}refreshing={refreshing} /> }/>
+      <FlatList
+      data={DATA} 
+      renderItem={Item}
+      keyExtractor = {item =>item.id}
+      refreshControl={<RefreshControl 
+      onRefresh={onRefresh} 
+      colors={['#ff0000', '#00ff00', '#0000ff']}
+      refreshing={refreshing} />
+      }/>
       <StatusBar style="auto" />
     </View>
   );
@@ -70,15 +82,14 @@ export default function RankList() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   tile:{
-    width: 300,
-    height: 60,
+    width: wp("85"),
+    height: hp("7%"),
     borderRadius: 10,
     // backgroundColor: "red",
     alignItems: "center",
@@ -97,8 +108,10 @@ const styles = StyleSheet.create({
   },
   tiletext: {
     marginLeft: 40,
-    fontSize: 30,
+    fontSize: 18.7,
     color: "#342317",
+    flexWrap: "wrap",
+    fontWeight: 'bold'
   }
 });
 
