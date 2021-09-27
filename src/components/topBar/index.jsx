@@ -19,19 +19,19 @@ const TopBar = () => {
           <FontAwesomeIcon
             round
             icon={faUserCircle}
-            size={70}
+            size={50}
             color={"white"}
           />
           <Text style={styles.text}>Pixel Bit</Text>
         </View>
 
         <View style={styles.title}>
-          <FontAwesomeIcon round icon={faPoll} size={70} color={"white"} />
+          <FontAwesomeIcon round icon={faPoll} size={50} color={"white"} />
           <Text style={styles.text}>Ranking</Text>
         </View>
 
         <View style={styles.title}>
-          <FontAwesomeIcon round icon={faAndroid} size={70} color={"white"} />
+          <FontAwesomeIcon round icon={faAndroid} size={50} color={"white"} />
           <Text style={styles.text}>More</Text>
         </View>
       </SafeAreaView>
@@ -42,19 +42,19 @@ export default TopBar;
 
 const styles = StyleSheet.create({
   topBar: {
-    height: hp("100%"),
+    height: hp("90%"),
+    width: wp("100%"),
     flexDirection: "row",
-    flex: 0.15,
+    flex: 0.9,
     justifyContent: "space-around",
     alignItems: "stretch",
     backgroundColor: "#a0e7e1",
-    borderBottomRightRadius: 40,
-
+    borderBottomRightRadius: 70,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 
   title: {
-    bottom: hp("1%"),
+    bottom: hp("2%"),
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -68,10 +68,11 @@ const styles = StyleSheet.create({
   },
 
   topColourView: {
-    flex: 0.06,
+    flex: 0.5,
     backgroundColor: "#78ddd4",
   },
   container: {
-    flex: 1,
+    marginBottom: hp("1.75%"),
+    flex: 0.2,
   },
 });
