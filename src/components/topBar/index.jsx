@@ -1,29 +1,16 @@
 import React from "react";
-import { Text, View, SafeAreaView, StyleSheet, StatusBar } from "react-native";
-
+import { Text, View, StyleSheet, StatusBar } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Ionicons, FontAwesome5Brands } from '@expo/vector-icons';
-// import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-// import { faPoll, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-// import { faAndroid } from "@fortawesome/free-brands-svg-icons";
+import { Ionicons } from '@expo/vector-icons';
 
 const TopBar = () => {
   return (
     <View style={styles.topContainer}>
-      {/* <View style={styles.topColourView} /> */}
-
       <View style={styles.topBar}>
-
         <View style={styles.title}>
-          {/* <FontAwesomeIcon
-            round
-            icon={faUserCircle}
-            size={35}
-            color={"white"}
-          /> */}
           <View style={styles.iconContainer}>
             <Ionicons 
               name="person-outline"
@@ -37,7 +24,6 @@ const TopBar = () => {
         </View>
 
         <View style={styles.title}>
-          {/* <FontAwesomeIcon round icon={faPoll} size={35} color={"white"} /> */}
           <View style={styles.iconContainer}>
             <Ionicons 
               name="stats-chart-outline"
@@ -50,7 +36,6 @@ const TopBar = () => {
         </View>
 
         <View style={styles.title}>
-          {/* <FontAwesomeIcon round icon={faAndroid} size={35} color={"white"} /> */}
           <View style={styles.iconContainer}>
             <Ionicons 
                 name="information-outline"

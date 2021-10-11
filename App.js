@@ -20,7 +20,7 @@ export default function App() {
   return (
     <AuthProvider>
       <View style={styles.container}>
-       <Rankings /> 
+       <Profile /> 
       </View>
     </AuthProvider>
   );

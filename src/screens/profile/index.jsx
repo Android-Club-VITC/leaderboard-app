@@ -6,13 +6,13 @@ import ContributionsSection from "../../components/contributionsSection";
 
 const Profile = () => {
   return (
-    
+    <SafeAreaView>
       <ScrollView style={styles.scrollView}>
         <AvatarBox />
         <SocialSection />
         <ContributionsSection />
       </ScrollView>
-    
+    </SafeAreaView>
   );
 };
 export default Profile;
