@@ -5,47 +5,79 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faPoll, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { faAndroid } from "@fortawesome/free-brands-svg-icons";
+import { Ionicons, FontAwesome5Brands } from '@expo/vector-icons';
+// import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+// import { faPoll, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+// import { faAndroid } from "@fortawesome/free-brands-svg-icons";
 
 const TopBar = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.topColourView} />
+    <View style={styles.topContainer}>
+      {/* <View style={styles.topColourView} /> */}
 
-      <SafeAreaView style={styles.topBar}>
+      <View style={styles.topBar}>
+
         <View style={styles.title}>
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             round
             icon={faUserCircle}
-            size={50}
+            size={35}
             color={"white"}
-          />
-          <Text style={styles.text}>Pixel Bit</Text>
+          /> */}
+          <View style={styles.iconContainer}>
+            <Ionicons 
+              name="person-outline"
+              size={hp('3.5%')}
+              color="#a0e7e1"
+              style={{margin: 'auto'}}
+            />
+          </View>
+          
+          <Text style={styles.text}>username</Text>
         </View>
 
         <View style={styles.title}>
-          <FontAwesomeIcon round icon={faPoll} size={50} color={"white"} />
+          {/* <FontAwesomeIcon round icon={faPoll} size={35} color={"white"} /> */}
+          <View style={styles.iconContainer}>
+            <Ionicons 
+              name="stats-chart-outline"
+              size={hp('3.5%')}
+              color="#a0e7e1"
+              style={{margin: 'auto'}}
+            />
+          </View>
           <Text style={styles.text}>Ranking</Text>
         </View>
 
         <View style={styles.title}>
-          <FontAwesomeIcon round icon={faAndroid} size={50} color={"white"} />
+          {/* <FontAwesomeIcon round icon={faAndroid} size={35} color={"white"} /> */}
+          <View style={styles.iconContainer}>
+            <Ionicons 
+                name="information-outline"
+                size={hp('3.5%')}
+                color="#a0e7e1"
+                style={{margin: 'auto'}}
+              />
+          </View>
           <Text style={styles.text}>More</Text>
         </View>
-      </SafeAreaView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 export default TopBar;
 
 const styles = StyleSheet.create({
+  topContainer: {
+    marginBottom: hp('3%'),
+  },
   topBar: {
-    height: hp("90%"),
+    height: hp("10%"),
     width: wp("100%"),
-    flexDirection: "row",
-    flex: 0.9,
+    display: 'flex',
+    flexDirection: 'row',
+    // flexDirection: "row",
+    // flex: 0.9,
     justifyContent: "space-around",
     alignItems: "stretch",
     backgroundColor: "#a0e7e1",
@@ -54,15 +86,23 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    bottom: hp("2%"),
-    flexDirection: "column",
+    // bottom: hp("2%"),
+    width: wp('24%'),
     alignItems: "center",
     justifyContent: "center",
   },
-
+  iconContainer: {
+    width: hp('6%'),
+    height: hp('6%'),
+    backgroundColor: '#fff',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row'
+  },
   text: {
     padding: hp("0.01%"),
-
     color: "black",
     fontWeight: "bold",
   },

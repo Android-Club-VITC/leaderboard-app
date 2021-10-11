@@ -33,37 +33,41 @@ const SignIn = () => {
     if (res) setVerifyEmail(true);
     else setVerifyEmail(false);
     setLoading(false);
-};
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>SIGN IN</Text>
-
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-        placeholder="E-Mail Address"
-      />
-
-      <TextInput
-        secureTextEntry={true}
-        style={styles.input}
-        onChangeText={setOtp}
-        value={otp}
-        placeholder="OTP"
-        editable={verifyEmail}
-      />
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={verifyEmail ? loginHandler : verifyEmailHandler}
-        underlayColor="#fff"
-      >
+      <View style={{marginTop: hp('25%')}}>
+        <Text style={styles.title}>SIGN IN</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          value={text}
+          placeholder="E-Mail Address"
+        />
+        {loading ? (
+          <TextInput
+          secureTextEntry={true}
+          style={styles.input}
+          onChangeText={setOtp}
+          value={otp}
+          placeholder="OTP"
+          editable={verifyEmail}
+        />
+        ): (
+          null
+        )}
+        
+        <TouchableOpacity
+          style={styles.button}
+          onPress={verifyEmail ? loginHandler : verifyEmailHandler}
+          underlayColor="#fff"
+        >
         <Text style={styles.buttonText}>
-          {loading? "I am Loading" : verifyEmail ? "Sign In" : "Request OTP"}
+          {loading ? "Loading..." : verifyEmail ? "Sign In" : "Request OTP"}
         </Text>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -72,15 +76,17 @@ const styles = StyleSheet.create({
   input: {
     height: hp("5%"),
     margin: hp("1%"),
-    borderBottomWidth: hp("0.1%"),
+    borderBottomWidth: hp("0.2%"),
     padding: 10,
+    // backgroundColor: "yellow",
   },
   container: {
     flex: 1,
-    width: wp("91%"),
-    justifyContent: "space-around",
-    padding: wp("10%"),
-    height: hp("80%"),
+    width: wp("100%"),
+    // justifyContent: "space-around",
+    padding: wp("5%"),
+    // height: hp("100%"),
+    // backgroundColor: "red",
   },
   arrow: {
     top: hp("2%"),
@@ -91,6 +97,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: hp("5%"),
     fontWeight: "bold",
+    marginBottom: hp('2%')
   },
   button: {
     backgroundColor: "black",
@@ -98,6 +105,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: hp("5%"),
     justifyContent: "center",
+    marginTop: hp('2%'),
+    marginBottom: hp('2%')
   },
 
   buttonText: {
