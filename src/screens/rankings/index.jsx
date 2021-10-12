@@ -1,14 +1,14 @@
 import React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import TopBar from "../../components/topBar";
 import RankList from "../../components/rankList";
 
 const Rankings = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container_outer}>
+    <View style={styles.container_outer}>
       <TopBar navigation={navigation} />
       <RankList navigation={navigation} />
-    </SafeAreaView>
+    </View>
   );
 };
 export default Rankings;

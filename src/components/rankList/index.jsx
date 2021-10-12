@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, {useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
+// service
+import { getAllContribution } from "./service";
+
 var DATA = [
   { name: "Jonny Singh", id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba", rank: 1 },
   { name: "Robin Quinn", id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bb", rank: 2 },
@@ -67,18 +71,38 @@ var DATA = [
 ];
 
 export default function RankList({navigation}) {
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
-
   const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
+  const [data,setData] = React.useState([]);
+
+  const modelData = (res) => {
+    const data = res.map((x,i)=>{
+      return {
+        rank: (i+1),
+        name: x.member.name,
+        id: `rank-${i+1}`
+      }
+    })
+    return data;
+  }
+
+  const getData = async () => {
     setRefreshing(true);
-    wait(5000).then(() => setRefreshing(false));
+    const res = await getAllContribution();
+    const d = modelData(res)
+    setData(d)
+    setRefreshing(false);
+  }
+
+  const onRefresh = React.useCallback(() => {
+    getData();
   }, []);
+  
+  useEffect(() => {
+    getData();
+  },[])
 
   const RenderLine = ({ rank }) => {
-    if (rank != DATA.length) {
+    if (rank != data.length) {
       return (
         <View
           style={{
@@ -116,7 +140,7 @@ export default function RankList({navigation}) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={DATA}
+        data={data}
         renderItem={Item}
         keyExtractor={(item) => item.id}
         refreshControl={
