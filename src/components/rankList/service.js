@@ -12,7 +12,7 @@ export const getAllContribution = async () => {
             }
         });
 
-        return res
+        return res.data
     } catch(e) {
         console.log(e);
         return [];

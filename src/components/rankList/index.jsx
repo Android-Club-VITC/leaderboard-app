@@ -75,6 +75,7 @@ export default function RankList({navigation}) {
   const [data,setData] = React.useState([]);
 
   const modelData = (res) => {
+    console.log(res)
     const data = res.map((x,i)=>{
       return {
         rank: (i+1),
