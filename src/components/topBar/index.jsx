@@ -1,37 +1,43 @@
 import React from "react";
-import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
-const TopBar = ({navigation}) => {
+const TopBar = ({ navigation }) => {
   return (
     <View style={styles.topContainer}>
       <View style={styles.topBar}>
         <View style={styles.title}>
           <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Ionicons 
+            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+              <Ionicons
                 name="person-outline"
-                size={hp('3.5%')}
+                size={hp("3.5%")}
                 color="#a0e7e1"
-                style={{margin: 'auto'}}
+                style={{ margin: "auto" }}
               />
-            </TouchableOpacity> 
+            </TouchableOpacity>
           </View>
-          
+
           <Text style={styles.text}>username</Text>
         </View>
 
         <View style={styles.title}>
           <View style={styles.iconContainer}>
-            <Ionicons 
+            <Ionicons
               name="stats-chart-outline"
-              size={hp('3.5%')}
+              size={hp("3.5%")}
               color="#a0e7e1"
-              style={{margin: 'auto'}}
+              style={{ margin: "auto" }}
             />
           </View>
           <Text style={styles.text}>Ranking</Text>
@@ -39,12 +45,12 @@ const TopBar = ({navigation}) => {
 
         <View style={styles.title}>
           <View style={styles.iconContainer}>
-            <Ionicons 
-                name="information-outline"
-                size={hp('3.5%')}
-                color="#a0e7e1"
-                style={{margin: 'auto'}}
-              />
+            <Ionicons
+              name="information-outline"
+              size={hp("3.5%")}
+              color="#a0e7e1"
+              style={{ margin: "auto" }}
+            />
           </View>
           <Text style={styles.text}>More</Text>
         </View>
@@ -56,35 +62,34 @@ export default TopBar;
 
 const styles = StyleSheet.create({
   topContainer: {
-    backgroundColor: '#fff'
+    backgroundColor: "#fff",
   },
   topBar: {
-    height: hp("10%"),
-    width: wp("100%"),
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "stretch",
     backgroundColor: "#a0e7e1",
     borderBottomRightRadius: 70,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingBottom: 20,
   },
 
   title: {
     // bottom: hp("2%"),
-    width: wp('24%'),
+    width: wp("24%"),
     alignItems: "center",
     justifyContent: "center",
   },
   iconContainer: {
-    width: hp('6%'),
-    height: hp('6%'),
-    backgroundColor: '#fff',
+    width: hp("6%"),
+    height: hp("6%"),
+    backgroundColor: "#fff",
     borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row'
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
   },
   text: {
     padding: hp("0.01%"),

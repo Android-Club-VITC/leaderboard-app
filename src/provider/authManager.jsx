@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }) => {
 
       if (res.status == 200) {
         const t = res.headers["ac_token"];
+        await storeToken(t);
         setIsLoggedIn(true);
         setToken(t);
-        await storeToken(t);
       }
     } catch (e) {
       console.log(e);
