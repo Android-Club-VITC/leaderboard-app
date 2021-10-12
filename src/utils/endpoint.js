@@ -1,3 +1,3 @@
-const url = "http://192.168.1.14:4000"
+const url = "https://nameless-earth-50620.herokuapp.com"
 
 export default url

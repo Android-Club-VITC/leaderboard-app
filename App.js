@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,22 +10,16 @@ import { AuthProvider, useAuth, AuthContext } from "./src/provider/authManager";
 import RootStackNav from "./src/router/rootNav";
 
 function Home() {
-  const { isLoggedIn } = useAuth();
-  return (
-    <>
-    {!isLoggedIn ? <SignIn /> : <Text>Logged In</Text>}
-    </>
-  );
+  return <></>;
 }
 
 export default function App() {
+  const { isLoggedIn } = useAuth();
+
   return (
     <AuthProvider>
       <NavigationContainer>
-        {/* <View style={styles.container}>
-          <Home />
-        </View> */}
-        <RootStackNav />
+        {!isLoggedIn ? <SignIn /> : <RootStackNav />}
       </NavigationContainer>
     </AuthProvider>
   );

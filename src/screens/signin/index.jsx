@@ -6,8 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,11 +14,12 @@ import {
 import { useAuth } from "../../provider/authManager";
 import { verifyEmailService } from "./services";
 
-const SignIn = () => {
+export default function SignIn() {
   const [text, onChangeText] = useState();
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [otpInputVisibility, setOtpInputVisibility] = useState(false);
   const { login } = useAuth();
 
   const loginHandler = async () => {
@@ -29,6 +28,7 @@ const SignIn = () => {
 
   const verifyEmailHandler = async () => {
     setLoading(true);
+    setOtpInputVisibility(true);
     const res = await verifyEmailService(text);
     if (res) setVerifyEmail(true);
     else setVerifyEmail(false);
@@ -37,7 +37,7 @@ const SignIn = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{marginTop: hp('25%')}}>
+      <View style={{ marginTop: hp("25%") }}>
         <Text style={styles.title}>SIGN IN</Text>
         <TextInput
           style={styles.input}
@@ -45,33 +45,31 @@ const SignIn = () => {
           value={text}
           placeholder="E-Mail Address"
         />
-        {loading ? (
+        {otpInputVisibility ? (
           <TextInput
-          secureTextEntry={true}
-          style={styles.input}
-          onChangeText={setOtp}
-          value={otp}
-          placeholder="OTP"
-          editable={verifyEmail}
-        />
-        ): (
-          null
-        )}
-        
+            secureTextEntry={false}
+            style={styles.input}
+            onChangeText={setOtp}
+            value={otp}
+            placeholder="OTP"
+            editable={verifyEmail}
+          />
+        ) : null}
+
         <TouchableOpacity
           style={styles.button}
           onPress={verifyEmail ? loginHandler : verifyEmailHandler}
           underlayColor="#fff"
         >
-        <Text style={styles.buttonText}>
-          {loading ? "Loading..." : verifyEmail ? "Sign In" : "Request OTP"}
-        </Text>
+          <Text style={styles.buttonText}>
+            {loading ? "Loading..." : verifyEmail ? "Sign In" : "Request OTP"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-};
-export default SignIn;
+}
+
 const styles = StyleSheet.create({
   input: {
     height: hp("5%"),
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: hp("5%"),
     fontWeight: "bold",
-    marginBottom: hp('2%')
+    marginBottom: hp("2%"),
   },
   button: {
     backgroundColor: "black",
@@ -105,8 +103,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: hp("5%"),
     justifyContent: "center",
-    marginTop: hp('2%'),
-    marginBottom: hp('2%')
+    marginTop: hp("2%"),
+    marginBottom: hp("2%"),
   },
 
   buttonText: {
