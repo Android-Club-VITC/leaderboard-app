@@ -1,23 +1,25 @@
 import React from "react";
-import { Text, View, StyleSheet, StatusBar } from "react-native";
+import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Ionicons } from '@expo/vector-icons';
 
-const TopBar = () => {
+const TopBar = ({navigation}) => {
   return (
     <View style={styles.topContainer}>
       <View style={styles.topBar}>
         <View style={styles.title}>
           <View style={styles.iconContainer}>
-            <Ionicons 
-              name="person-outline"
-              size={hp('3.5%')}
-              color="#a0e7e1"
-              style={{margin: 'auto'}}
-            />
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+              <Ionicons 
+                name="person-outline"
+                size={hp('3.5%')}
+                color="#a0e7e1"
+                style={{margin: 'auto'}}
+              />
+            </TouchableOpacity> 
           </View>
           
           <Text style={styles.text}>username</Text>
@@ -54,15 +56,13 @@ export default TopBar;
 
 const styles = StyleSheet.create({
   topContainer: {
-    marginBottom: hp('3%'),
+    backgroundColor: '#fff'
   },
   topBar: {
     height: hp("10%"),
     width: wp("100%"),
     display: 'flex',
     flexDirection: 'row',
-    // flexDirection: "row",
-    // flex: 0.9,
     justifyContent: "space-around",
     alignItems: "stretch",
     backgroundColor: "#a0e7e1",
