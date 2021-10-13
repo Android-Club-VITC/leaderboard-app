@@ -21,15 +21,14 @@ export default function PublicRankList() {
   const [data, setData] = React.useState([]);
 
   const modelData = (res) => {
-    console.log(res);
-    const data = res.map((x, i) => {
+    const d = res.map((x, i) => {
       return {
         rank: i + 1,
         name: x.member.name,
         id: `rank-${i + 1}`,
       };
     });
-    return data;
+    return d;
   };
 
   const getData = async () => {
