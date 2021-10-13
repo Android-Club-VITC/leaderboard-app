@@ -28,7 +28,7 @@ const TopBar = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.text}>username</Text>
+          <Text style={styles.text}>Profile</Text>
         </View>
 
         <View style={styles.title}>

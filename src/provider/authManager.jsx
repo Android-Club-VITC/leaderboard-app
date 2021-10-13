@@ -13,6 +13,7 @@ export const initialAuthState = {
   logout: () => {},
   setLoading: () => {},
   loading: false,
+  email: ""
 };
 
 export const AuthContext = React.createContext(initialAuthState);
@@ -21,18 +22,21 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [email,setEmail] = useState("");
 
-  const login = async (email, otp) => {
+  const login = async (verifiedEmail, otp) => {
     setLoading(true);
     try {
       const res = await axios.post(`${URL}/api/auth/loginIn`, {
-        email,
+        verifiedEmail,
         otp
       });
 
       if (res.status == 200) {
         const t = res.headers["ac_token"];
         await storeToken(t);
+        axios.defaults.headers.common['AC_TOKEN'] = t;
+        setEmail(email);
         setIsLoggedIn(true);
         setToken(t);
       }
@@ -55,6 +59,8 @@ export const AuthProvider = ({ children }) => {
             AC_TOKEN: t,
           },
         });
+        axios.defaults.headers.common['AC_TOKEN'] = t;
+        setEmail(res.data.email);
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -71,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, token, loading, setLoading, login, logout }}
+      value={{ isLoggedIn, token, loading, setLoading, login, logout, email }}
     >
       {loading ? <Loader /> : children }
     </AuthContext.Provider>
@@ -79,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
-  const { isLoggedIn, token, loading, setLoading, login, logout } =
+  const { isLoggedIn, token, loading, setLoading, login, logout, email } =
     useContext(AuthContext);
   return {
     isLoggedIn,
@@ -88,5 +94,6 @@ export const useAuth = () => {
     setLoading,
     login,
     logout,
+    email
   };
 };
