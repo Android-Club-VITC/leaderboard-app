@@ -1,14 +1,35 @@
-import React from "react";
+import React,{ useEffect, useState } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import AvatarBox from "../../components/avatarBox";
 import SocialSection from "../../components/socialSection";
 import ContributionsSection from "../../components/contributionsSection";
 
+import { getUserInfoService } from "./services";
+import { useAuth } from "../../provider/authManager";
+
 const Profile = () => {
+  const [data,setData] = useState({})
+  const [loading,setLoading] = useState(false);
+  const {email} = useAuth()
+
+  const getData = async () => {
+    setLoading(true)
+    const res = await getUserInfoService(email);
+    setData(res);
+  }
+
+  useEffect(()=>{
+    setLoading(false);
+  },[data])
+
+  useEffect(()=>{
+    getData();
+  },[])
+
   return (
     <ScrollView style={styles.scrollView}>
-      <AvatarBox />
-      <SocialSection />
+      <AvatarBox name={data.name} />
+      <SocialSection linkedIn={data.socials?.linkedIn} discord={data.socials?.discord} instagram={data.socials?.instagram}/>
       <ContributionsSection />
     </ScrollView>
   );

@@ -39,22 +39,22 @@ function Socialsectionbox({ name, iconname }) {
         </View>
       </View>
       <View style={styles.itemRight}>
-        <Text style={styles.itemText}>{name}</Text>
+        <Text style={styles.itemText}>{iconname.toUpperCase()}</Text>
         <Text style={styles.itemSubText}>{name}</Text>
       </View>
     </View>
   );
 }
-export default function SocialSection() {
+export default function SocialSection({linkedIn, instagram, discord}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Social</Text>
       </View>
         <View style={styles.itembox}>
-          <Socialsectionbox name="Discord" iconname="discord" />
-          <Socialsectionbox name="Instagram" iconname="instagram" />
-          <Socialsectionbox name="LinkedIn" iconname="linkedin" />
+          <Socialsectionbox name={discord || "Not Set"} iconname="discord" />
+          <Socialsectionbox name={instagram || "Not Set"} iconname="instagram" />
+          <Socialsectionbox name={linkedIn || "Not Set"} iconname="linkedin" />
           <Socialsectionbox name="Facebook" iconname="facebook" />
         </View>
     </View>

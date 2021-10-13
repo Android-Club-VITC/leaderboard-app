@@ -5,14 +5,43 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Image,
+  Modal,
+  Pressable,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
+import PublicRankList from "./components/publicRankList";
+
 import { useAuth } from "../../provider/authManager";
-import { verifyEmailService } from "./services";
+import { verifyEmailService,getAllContributionService } from "./services";
+
+function RankListModal({ modalVisible, setModalVisible }) {
+  return (
+    <Modal
+      animationType="slide"
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+        <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.textStyle}>Hide Modal</Text>
+          </Pressable>
+          <PublicRankList />
+        </View>
+      </View>
+    </Modal>
+  );
+}
 
 export default function SignIn() {
   const [text, onChangeText] = useState();
@@ -20,6 +49,8 @@ export default function SignIn() {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [otpInputVisibility, setOtpInputVisibility] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { login } = useAuth();
 
   const loginHandler = async () => {
@@ -37,6 +68,10 @@ export default function SignIn() {
 
   return (
     <View style={styles.container}>
+      <RankListModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <View style={{ marginTop: hp("25%") }}>
         <Text style={styles.title}>SIGN IN</Text>
         <TextInput
@@ -66,13 +101,23 @@ export default function SignIn() {
           </Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        style={{ alignSelf: "flex-end" }}
+        onPress={() => setModalVisible(true)}
+        underlayColor="#fff"
+      >
+        <Image
+          source={require("../../assets/ac_logo.png")}
+          style={{ width: 80, height: 80 }}
+        />
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   input: {
-    height: hp("5%"),
+    //height: hp("5%"),
     margin: hp("1%"),
     borderBottomWidth: hp("0.2%"),
     padding: 10,
@@ -81,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: wp("100%"),
-    // justifyContent: "space-around",
+    justifyContent: "space-between",
     padding: wp("5%"),
     // height: hp("100%"),
     // backgroundColor: "red",

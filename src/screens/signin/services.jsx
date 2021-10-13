@@ -11,3 +11,13 @@ export const verifyEmailService = async (email) => {
     return false;
   }
 };
+
+export const getAllContributionService = async () => {
+  try {
+      const res = await axios.get(`${URL}/api/public/getAllContribution`);
+      return res.data
+  } catch(e) {
+      console.log(e);
+      return [];
+  }
+}

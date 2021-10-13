@@ -5,9 +5,7 @@ import {
   Text,
   View,
   FlatList,
-  SafeAreaView,
-  RefreshControl,
-  TouchableOpacity,
+  RefreshControl
 } from "react-native";
 
 import {
@@ -16,26 +14,27 @@ import {
 } from "react-native-responsive-screen";
 
 // service
-import { getAllContribution } from "./service";
+import { getAllContributionService } from "../../services";
 
-export default function RankList({ navigation }) {
+export default function PublicRankList() {
   const [refreshing, setRefreshing] = React.useState(false);
   const [data, setData] = React.useState([]);
 
   const modelData = (res) => {
-    const d = res.map((x, i) => {
+    console.log(res);
+    const data = res.map((x, i) => {
       return {
         rank: i + 1,
         name: x.member.name,
         id: `rank-${i + 1}`,
       };
     });
-    return d;
+    return data;
   };
 
   const getData = async () => {
     setRefreshing(true);
-    const res = await getAllContribution();
+    const res = await getAllContributionService();
     const d = modelData(res);
     setData(d);
     setRefreshing(false);
@@ -68,20 +67,18 @@ export default function RankList({ navigation }) {
 
   const Item = ({ item }) => {
     return (
-      <TouchableOpacity onLongPress={() => navigation.navigate("Profile")}>
-        <View style={{ marginLeft: wp("5%") }}>
-          <View style={styles.tile}>
-            <View style={styles.leading}>
-              <Text style={{ fontSize: hp("3"), color: "white" }}>
-                {item.rank}
-              </Text>
-            </View>
-
-            <Text style={styles.tiletext}>{item.name}</Text>
+      <View style={{ marginLeft: wp("5%") }}>
+        <View style={styles.tile}>
+          <View style={styles.leading}>
+            <Text style={{ fontSize: hp("3"), color: "white" }}>
+              {item.rank}
+            </Text>
           </View>
-          <RenderLine rank={item.rank} />
+
+          <Text style={styles.tiletext}>{item.name}</Text>
         </View>
-      </TouchableOpacity>
+        <RenderLine rank={item.rank} />
+      </View>
     );
   };
 

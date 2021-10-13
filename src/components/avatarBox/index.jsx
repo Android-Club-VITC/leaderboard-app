@@ -1,31 +1,41 @@
 import React from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
+import { StyleSheet, View, StatusBar, Text } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 
-const AvatarBox = () => {
+const AvatarBox = ({name}) => {
   return (
     <View style={styles.container}>
       <View style={styles.AvatarOuterContainer}>
         <View style={styles.AvatarContainer}>
           <Ionicons
             name="person-outline"
-            size={hp("20%")}
+            size={hp("15%")}
             color="#000"
             style={styles.avatar}
           />
           <View style={styles.editContainer}>
-          <Ionicons
+            <Ionicons
               name="person-outline"
               size={hp("3%")}
               color="#000"
-              style={{textAlign: 'center'}}
+              style={{ textAlign: "center" }}
             />
           </View>
         </View>
+        <Text
+          style={{
+            marginTop: 10,
+            maxWidth: wp("80%"),
+            fontSize: hp("3%"),
+            fontWeight: "bold",
+          }}
+        >
+          {name}
+        </Text>
       </View>
     </View>
   );
@@ -39,7 +49,6 @@ const styles = StyleSheet.create({
   },
   AvatarOuterContainer: {
     width: wp("100%"),
-    height: hp("35%"),
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#a0e7e1",
@@ -49,22 +58,22 @@ const styles = StyleSheet.create({
   AvatarContainer: {
     backgroundColor: "#fff",
     borderRadius: 200,
-    width: hp("30%"),
-    height: hp("30%"),
+    width: hp("25%"),
+    height: hp("25%"),
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
   editContainer: {
     position: "absolute",
-    display: 'flex',
+    display: "flex",
     right: 0,
     bottom: 0,
     width: hp("5%"),
     height: hp("5%"),
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 100,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   editAvatar: {
     position: "absolute",
@@ -73,5 +82,5 @@ const styles = StyleSheet.create({
   },
   avatar: {
     //   test
-  }
+  },
 });
