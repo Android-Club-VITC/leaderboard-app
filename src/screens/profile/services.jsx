@@ -10,3 +10,13 @@ export const getUserInfoService = async (email) => {
     return {};
   }
 };
+
+export const editSocialsService = async (obj) => {
+  try {
+    const res = await axios.post(`${URL}/api/member/editSocials`, obj);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
