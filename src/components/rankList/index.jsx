@@ -28,6 +28,7 @@ export default function RankList({ navigation }) {
         rank: i + 1,
         name: x.member.name,
         id: `rank-${i + 1}`,
+        score: x.score
       };
     });
     return d;
@@ -76,8 +77,10 @@ export default function RankList({ navigation }) {
                 {item.rank}
               </Text>
             </View>
-
+            <View>
             <Text style={styles.tiletext}>{item.name}</Text>
+            <Text style={styles.tiletextsmall}>{`score: ${item.score}`}</Text>
+            </View>
           </View>
           <RenderLine rank={item.rank} />
         </View>
@@ -136,5 +139,11 @@ const styles = StyleSheet.create({
     color: "#342317",
     flexWrap: "wrap",
     fontWeight: "bold",
+  },
+  tiletextsmall: {
+    marginLeft: 40,
+    fontSize: 12,
+    color: "grey",
+    flexWrap: "wrap"
   },
 });
