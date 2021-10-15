@@ -15,7 +15,7 @@ const Profile = () => {
 
   const handleSocialsEdit = async (obj) => {
     setLoading(true);
-    await editSocialsService(obj);
+    await editSocialsService(email, obj);
     getData() 
   }
   const getData = async () => {
@@ -43,6 +43,7 @@ const Profile = () => {
             linkedin={data.socials?.linkedin}
             discord={data.socials?.discord}
             instagram={data.socials?.instagram}
+            github={data.socials?.github}
             handleEdit={handleSocialsEdit}
           />
           <ContributionsSection />
