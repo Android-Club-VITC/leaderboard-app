@@ -5,7 +5,6 @@ import {
   Text,
   View,
   FlatList,
-  SafeAreaView,
   RefreshControl,
   TouchableOpacity,
 } from "react-native";

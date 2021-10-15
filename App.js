@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-
 import SignIn from "./src/screens/signin";
 
 import { AuthProvider, useAuth, AuthContext } from "./src/provider/authManager";
@@ -20,7 +19,7 @@ function Home() {
 export default function App() {
   return (
     <AuthProvider>
-      <Home />
+        <Home />
     </AuthProvider>
   );
 }

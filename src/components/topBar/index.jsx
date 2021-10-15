@@ -45,12 +45,14 @@ const TopBar = ({ navigation }) => {
 
         <View style={styles.title}>
           <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate("More")}>
             <Ionicons
               name="information-outline"
               size={hp("3.5%")}
               color="#a0e7e1"
               style={{ margin: "auto" }}
             />
+          </TouchableOpacity>
           </View>
           <Text style={styles.text}>More</Text>
         </View>
@@ -71,8 +73,8 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     backgroundColor: "#a0e7e1",
     borderBottomRightRadius: 70,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     paddingBottom: 20,
+    paddingTop: 20,
   },
 
   title: {
