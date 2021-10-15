@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { VictoryPie } from "victory-native";
+import { VictoryPie, VictoryAnimation, VictoryChart, VictoryLine } from "victory-native";
 const ContributionsSection = () => {
   const graphicData = [
     { y: 20, x: "Technical" },

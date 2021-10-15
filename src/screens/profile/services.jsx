@@ -11,9 +11,9 @@ export const getUserInfoService = async (email) => {
   }
 };
 
-export const editSocialsService = async (obj) => {
+export const editSocialsService = async (email, socials) => {
   try {
-    const res = await axios.post(`${URL}/api/member/editSocials`, obj);
+    const res = await axios.post(`${URL}/api/member/editSocials`, {socials, email});
     return true;
   } catch (e) {
     console.log(e);

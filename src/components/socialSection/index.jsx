@@ -12,29 +12,10 @@ import {
 } from "react-native-responsive-screen";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 
-const socialarr = [
-  {
-    name: "Discord",
-    iconname: "discord",
-  },
-  {
-    name: "Instagram",
-    iconname: "instagram",
-  },
-  {
-    name: "LinkedIn",
-    iconname: "linkedin",
-  },
-  {
-    name: "Facebook",
-    iconname: "facebook",
-  },
-];
-
 function Socialsectionbox({ name, iconname, editable, setSocials }) {
   const handleEdit = (v) => {
     setSocials((s) => {
-      return { ...s, iconname: v };
+      return { ...s, [iconname]: v };
     });
   };
 
@@ -70,12 +51,14 @@ export default function SocialSection({
   linkedin,
   instagram,
   discord,
+  github,
   handleEdit,
 }) {
   const [socials, setSocials] = useState({
     discord,
     instagram,
     linkedin,
+    github,
   });
   const [editable, setEditable] = useState(false);
 
@@ -84,6 +67,7 @@ export default function SocialSection({
       linkedin,
       instagram,
       discord,
+      github,
     });
 
     setEditable(false);
@@ -94,7 +78,8 @@ export default function SocialSection({
       if (
         socials.linkedin != linkedin ||
         socials.discord != discord ||
-        socials.instagram != instagram
+        socials.instagram != instagram ||
+        socials.github != github
       ) {
         handleEdit(socials);
       }
@@ -109,7 +94,7 @@ export default function SocialSection({
           style={{
             flexDirection: "row",
             width: wp("20%"),
-            justifyContent: editable? "space-between": "flex-end",
+            justifyContent: editable ? "space-between" : "flex-end",
           }}
         >
           {editable && (
@@ -158,7 +143,12 @@ export default function SocialSection({
           editable={editable}
           setSocials={setSocials}
         />
-        <Socialsectionbox name="Facebook" iconname="facebook" />
+        <Socialsectionbox
+          name={github}
+          iconname="github"
+          editable={editable}
+          setSocials={setSocials}
+        />
       </View>
     </View>
   );

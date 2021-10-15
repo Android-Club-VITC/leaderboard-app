@@ -45,7 +45,6 @@ export default AvatarBox;
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   AvatarOuterContainer: {
     width: wp("100%"),
