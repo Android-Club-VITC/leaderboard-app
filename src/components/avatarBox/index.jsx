@@ -1,15 +1,66 @@
-import React from "react";
-import { StyleSheet, View, StatusBar, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 
-const AvatarBox = ({name}) => {
+const AvatarBox = ({ name, handleEdit }) => {
+  const [editName, setEditName] = useState(name);
+  const [editable, setEditable] = useState(false);
+
+  useEffect(() => {
+    if (!editable && editName != name) {
+      handleEdit(editName);
+    }
+  }, [editable]);
+
   return (
     <View style={styles.container}>
       <View style={styles.AvatarOuterContainer}>
+        <View
+          style={{
+            width: wp("100%"),
+            justifyContent: "flex-end",
+            flexDirection: "row",
+            paddingTop: 5,
+            paddingRight: 15,
+          }}
+        >
+          {editable && (
+            <TouchableOpacity
+              onPress={() => handleClose()}
+              underlayColor="#fff"
+            >
+              <FontAwesome
+                // style={{ marginLeft: wp("2.3%") }}
+                name={"close"}
+                size={hp("3%")}
+                color="black"
+              />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            onPress={() => setEditable(!editable)}
+            underlayColor="#fff"
+            style={{ paddingLeft: 10 }}
+          >
+            <FontAwesome
+              // style={{ marginLeft: wp("2.3%") }}
+              name={editable ? "check" : "edit"}
+              size={hp("3%")}
+              color="black"
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.AvatarContainer}>
           <Ionicons
             name="person-outline"
@@ -26,16 +77,26 @@ const AvatarBox = ({name}) => {
             />
           </View>
         </View>
-        <Text
-          style={{
-            marginTop: 10,
-            maxWidth: wp("80%"),
-            fontSize: hp("3%"),
-            fontWeight: "bold",
-          }}
-        >
-          {name}
-        </Text>
+        {!editable ? (
+          <Text
+            style={{
+              marginTop: 10,
+              maxWidth: wp("80%"),
+              fontSize: hp("3%"),
+              fontWeight: "bold",
+            }}
+          >
+            {name}
+          </Text>
+        ) : (
+          <TextInput
+            style={styles.input}
+            onChangeText={setEditName}
+            value={editName}
+            placeholder={`enter name`}
+          />
+        )}
+        <View style={{ justifySelf: "flex-end" }}></View>
       </View>
     </View>
   );
@@ -81,5 +142,11 @@ const styles = StyleSheet.create({
   },
   avatar: {
     //   test
+  },
+  input: {
+    marginTop: 15,
+    borderWidth: 0.2,
+    width: wp("40%"),
+    padding: 3,
   },
 });

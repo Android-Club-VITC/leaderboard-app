@@ -45,6 +45,20 @@ const TopBar = ({ navigation }) => {
 
         <View style={styles.title}>
           <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate("Org")}>
+            <Ionicons
+              name="information-outline"
+              size={hp("3.5%")}
+              color="#a0e7e1"
+              style={{ margin: "auto" }}
+            />
+          </TouchableOpacity>
+          </View>
+          <Text style={styles.text}>Org</Text>
+        </View>
+
+        <View style={styles.title}>
+          <View style={styles.iconContainer}>
           <TouchableOpacity onPress={() => navigation.navigate("More")}>
             <Ionicons
               name="information-outline"

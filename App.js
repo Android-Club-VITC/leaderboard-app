@@ -20,8 +20,8 @@ function Home() {
 export default function App() {
   return (
     <AuthProvider>
-        <OrgSelect />
-        {/* <Home /> */}
+        {/* <OrgSelect /> */}
+        <Home />
     </AuthProvider>
   );
 }

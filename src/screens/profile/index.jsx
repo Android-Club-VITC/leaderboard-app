@@ -5,7 +5,7 @@ import SocialSection from "../../components/socialSection";
 import ContributionsSection from "../../components/contributionsSection";
 import Loader from "../../components/loader";
 
-import { getUserInfoService, editSocialsService } from "./services";
+import { getUserInfoService, editSocialsService, editNameService } from "./services";
 import { useAuth } from "../../provider/authManager";
 
 const Profile = () => {
@@ -13,11 +13,18 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const { email } = useAuth();
 
+  const handleNameEdit = async (name) => {
+    setLoading(true);
+    await editNameService(email, name);
+    getData(); 
+  }
+  
   const handleSocialsEdit = async (obj) => {
     setLoading(true);
     await editSocialsService(email, obj);
     getData() 
   }
+
   const getData = async () => {
     setLoading(true);
     const res = await getUserInfoService(email);
@@ -38,7 +45,7 @@ const Profile = () => {
         <Loader />
       ) : (
         <ScrollView style={styles.scrollView}>
-          <AvatarBox name={data.name} />
+          <AvatarBox name={data.name} handleEdit={handleNameEdit} />
           <SocialSection
             linkedin={data.socials?.linkedin}
             discord={data.socials?.discord}

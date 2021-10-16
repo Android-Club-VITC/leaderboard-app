@@ -20,3 +20,13 @@ export const editSocialsService = async (email, socials) => {
     return false;
   }
 };
+
+export const editNameService = async (email, name) => {
+  try {
+    const res = await axios.post(`${URL}/api/member/editName`, {name, email});
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};

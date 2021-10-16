@@ -1,27 +1,39 @@
 import React from "react";
-import { SafeAreaView, View, StyleSheet, Text } from "react-native";
+import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import {
   heightPercentageToDP,
 } from "react-native-responsive-screen";
 
+import { useAuth } from "../../provider/authManager";
+
 export default function OrganizationSelection() {
+  const { orgs, selectedOrg, setSelectedOrg } = useAuth()
+  
+  const handleClick = (org) => {
+    if(org._id != selectedOrg._id) {
+      setSelectedOrg(org);
+    }
+  }
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <Text style={styles.headerText}>Your Organizations</Text>
         <View style={styles.picker}>
-          <View style={styles.pickerItem}>
+          {orgs.map((o,i)=>
+           <TouchableOpacity
+           key={i}
+           onPress={() => handleClick(o)}
+           underlayColor="#fff"
+         >
+          <View style={{...styles.pickerItem, borderColor: selectedOrg._id == o._id? "red": "#000"}}>
             <View style={styles.iconBox}>
               <Text></Text>
             </View>
-            <Text style={styles.orgName}>Name</Text>
+            <Text style={styles.orgName}>{o.name}</Text>
           </View>
-          <View style={styles.pickerItem}>
-            <View style={styles.iconBox}>
-              <Text></Text>
-            </View>
-            <Text style={styles.orgName}>Name</Text>
-          </View>
+          </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -57,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     textAlign: "center",
     alignItems: "center",
-    borderWidth: 0.3,
+    borderWidth: 1,
     borderColor: '#000',
     elevation: 15
   },

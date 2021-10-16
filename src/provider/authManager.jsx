@@ -13,7 +13,10 @@ export const initialAuthState = {
   logout: () => {},
   setLoading: () => {},
   loading: false,
-  email: ""
+  email: "",
+  orgs: [],
+  selectedOrg: {},
+  setSelectedOrg: () => {},
 };
 
 export const AuthContext = React.createContext(initialAuthState);
@@ -22,23 +25,37 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [orgs, setOrgs] = useState([]);
+  const [selectedOrg, setSelectedOrg] = useState({});
+
+  useEffect(() => {
+    axios.defaults.headers.common["AC_ORGID"] = selectedOrg?._id;
+  }, [selectedOrg]);
+
+  useEffect(() => {
+    if(orgs.length > 0) {
+      setSelectedOrg(orgs[0]);
+    }
+  }, [orgs]);
 
   const login = async (verifiedEmail, otp) => {
     setLoading(true);
     try {
-      const res = await axios.post(`${URL}/api/auth/loginIn`, {
-        verifiedEmail,
-        otp
+      const res = await axios.post(`${URL}/api/auth/login`, {
+        email: verifiedEmail,
+        otp,
       });
 
       if (res.status == 200) {
         const t = res.headers["ac_token"];
         await storeToken(t);
-        axios.defaults.headers.common['AC_TOKEN'] = t;
+        axios.defaults.headers.common["AC_TOKEN"] = t;
+        axios.defaults.headers.common["AC_ORGID"] = res.data.org[0]._id;
         setEmail(email);
-        setIsLoggedIn(true);
+        setIsLoggedIn(false);
         setToken(t);
+        setOrgs(res.data.org);
       }
     } catch (e) {
       console.log(e);
@@ -59,9 +76,11 @@ export const AuthProvider = ({ children }) => {
             AC_TOKEN: t,
           },
         });
-        axios.defaults.headers.common['AC_TOKEN'] = t;
+        axios.defaults.headers.common["AC_TOKEN"] = t;
+        axios.defaults.headers.common["AC_ORGID"] = res.data.org[0]._id;
         setEmail(res.data.email);
         setIsLoggedIn(true);
+        setOrgs(res.data.org);
       } else {
         setIsLoggedIn(false);
       }
@@ -77,16 +96,37 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, token, loading, setLoading, login, logout, email }}
+      value={{
+        isLoggedIn,
+        token,
+        loading,
+        setLoading,
+        login,
+        logout,
+        email,
+        orgs,
+        selectedOrg,
+        setSelectedOrg,
+      }}
     >
-      {loading ? <Loader /> : children }
+      {loading ? <Loader /> : children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const { isLoggedIn, token, loading, setLoading, login, logout, email } =
-    useContext(AuthContext);
+  const {
+    isLoggedIn,
+    token,
+    loading,
+    setLoading,
+    login,
+    logout,
+    email,
+    orgs,
+    selectedOrg,
+    setSelectedOrg,
+  } = useContext(AuthContext);
   return {
     isLoggedIn,
     token,
@@ -94,6 +134,9 @@ export const useAuth = () => {
     setLoading,
     login,
     logout,
-    email
+    email,
+    orgs,
+    selectedOrg,
+    setSelectedOrg,
   };
 };

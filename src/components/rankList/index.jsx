@@ -17,9 +17,13 @@ import {
 // service
 import { getAllContribution } from "./service";
 
+// auth
+import { useAuth } from "../../provider/authManager";
+
 export default function RankList({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [data, setData] = React.useState([]);
+  const { selectedOrg, orgs } = useAuth();
 
   const modelData = (res) => {
     const d = res.map((x, i) => {
@@ -47,7 +51,7 @@ export default function RankList({ navigation }) {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedOrg]);
 
   const RenderLine = ({ rank }) => {
     if (rank != data.length) {
