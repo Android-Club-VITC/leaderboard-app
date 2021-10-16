@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import SignIn from "./src/screens/signin";
+import OrgSelect from "./src/screens/orgSelection";
 
 import { AuthProvider, useAuth, AuthContext } from "./src/provider/authManager";
 import RootStackNav from "./src/router/rootNav";
@@ -19,7 +20,8 @@ function Home() {
 export default function App() {
   return (
     <AuthProvider>
-        <Home />
+        <OrgSelect />
+        {/* <Home /> */}
     </AuthProvider>
   );
 }
