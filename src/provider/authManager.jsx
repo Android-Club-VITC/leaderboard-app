@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common["AC_TOKEN"] = t;
         axios.defaults.headers.common["AC_ORGID"] = res.data.org[0]._id;
         setEmail(email);
-        setIsLoggedIn(false);
+        setIsLoggedIn(true);
         setToken(t);
         setOrgs(res.data.org);
       }

@@ -35,7 +35,7 @@ export default function RankList({ navigation }) {
         rank: i + 1,
         name: x.member.name,
         id: `rank-${i + 1}`,
-        score: x.score
+        score: x.score,
       };
     });
     return d;
@@ -55,17 +55,17 @@ export default function RankList({ navigation }) {
 
   useEffect(() => {
     getData();
-  }, [selectedOrg,isFocused]);
+  }, [selectedOrg, isFocused]);
 
   const RenderLine = ({ rank }) => {
     if (rank != data.length) {
       return (
         <View
           style={{
-            width: 5,
-            height: 20,
+            width: wp("1.5"),
+            height: hp("2.5"),
             backgroundColor: "black",
-            marginLeft: 27.5,
+            alignSelf: 'center'
           }}
         ></View>
       );
@@ -77,20 +77,25 @@ export default function RankList({ navigation }) {
   const Item = ({ item }) => {
     return (
       <TouchableOpacity onLongPress={() => navigation.navigate("Profile")}>
-        <View style={{ marginLeft: wp("5%") }}>
-          <View style={styles.tile}>
+        {/* <View style={{ marginLeft: wp("5%") }}> */}
+        <View style={styles.tile}>
+          <View>
             <View style={styles.leading}>
               <Text style={{ fontSize: hp("3"), color: "white" }}>
                 {item.rank}
               </Text>
             </View>
-            <View>
-            <Text style={styles.tiletext}>{item.name}</Text>
-            <Text style={styles.tiletextsmall}>{`score: ${item.score}`}</Text>
+            <View style={{display: 'flex'}}>
+              <RenderLine rank={item.rank} />
             </View>
           </View>
-          <RenderLine rank={item.rank} />
+          <View>
+            <Text style={styles.tiletext}>{item.name}</Text>
+            <Text style={styles.tiletextsmall}>{`score: ${item.score}`}</Text>
+          </View>
         </View>
+
+        {/* </View> */}
       </TouchableOpacity>
     );
   };
@@ -100,13 +105,13 @@ export default function RankList({ navigation }) {
       {loading ? (
         <Loader />
       ) : (
-          <FlatList
+        <FlatList
           data={data}
           renderItem={Item}
           keyExtractor={(item) => item.id}
         />
       )}
-      
+
       <StatusBar style="auto" />
     </View>
   );
@@ -122,16 +127,17 @@ const styles = StyleSheet.create({
   },
   tile: {
     width: wp("85"),
-    height: hp("7%"),
+    // height: hp("7%"),
     borderRadius: 10,
     alignItems: "center",
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
+    // backgroundColor: "red",
   },
   leading: {
-    width: 60,
-    height: 60,
+    width: hp("7"),
+    height: hp("7"),
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -149,6 +155,6 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     fontSize: 12,
     color: "grey",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
 });

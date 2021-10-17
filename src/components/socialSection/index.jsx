@@ -12,7 +12,7 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
-function Socialsectionbox({ name, iconname, editable, setSocials }) {
+function Socialsectionbox({ name, iconname, editable, setSocials, bcgColor, smallIconColor }) {
   const handleEdit = (v) => {
     setSocials((s) => {
       return { ...s, [iconname]: v };
@@ -20,9 +20,9 @@ function Socialsectionbox({ name, iconname, editable, setSocials }) {
   };
 
   return (
-    <View style={styles.item}>
-      <View style={styles.itemLeft}>
-        <View style={styles.circle}>
+    <View style={styles(bcgColor).item}>
+      <View style={styles().itemLeft}>
+        <View style={styles(bcgColor,smallIconColor).circle}>
           <FontAwesome5
             // style={{ marginLeft: wp("2.3%") }}
             name={iconname}
@@ -31,13 +31,13 @@ function Socialsectionbox({ name, iconname, editable, setSocials }) {
           />
         </View>
       </View>
-      <View style={styles.itemRight}>
-        <Text style={styles.itemText}>{iconname.toUpperCase()}</Text>
+      <View style={styles().itemRight}>
+        <Text style={styles().itemText}>{iconname.toUpperCase()}</Text>
         {!editable ? (
-          <Text style={styles.itemSubText}>{name}</Text>
+          <Text style={styles().itemSubText}>{name}</Text>
         ) : (
           <TextInput
-            style={styles.input}
+            style={styles().input}
             onChangeText={handleEdit}
             value={name}
             placeholder={`enter ${iconname}`}
@@ -53,6 +53,8 @@ export default function SocialSection({
   discord,
   github,
   handleEdit,
+  bcgColor,
+  smallIconColor
 }) {
   const [socials, setSocials] = useState({
     discord,
@@ -87,9 +89,9 @@ export default function SocialSection({
   }, [editable]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Social</Text>
+    <View style={styles().container}>
+      <View style={styles().header}>
+        <Text style={styles().title}>Social</Text>
         <View
           style={{
             flexDirection: "row",
@@ -124,37 +126,45 @@ export default function SocialSection({
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.itembox}>
+      <View style={styles().itembox}>
         <Socialsectionbox
           name={discord}
           iconname="discord"
           editable={editable}
           setSocials={setSocials}
+          bcgColor={bcgColor}
+          smallIconColor={smallIconColor}
         />
         <Socialsectionbox
           name={instagram}
           iconname="instagram"
           editable={editable}
           setSocials={setSocials}
+          bcgColor={bcgColor}
+          smallIconColor={smallIconColor}
         />
         <Socialsectionbox
           name={linkedin}
           iconname="linkedin"
           editable={editable}
           setSocials={setSocials}
+          bcgColor={bcgColor}
+          smallIconColor={smallIconColor}
         />
         <Socialsectionbox
           name={github}
           iconname="github"
           editable={editable}
           setSocials={setSocials}
+          bcgColor={bcgColor}
+          smallIconColor={smallIconColor}
         />
       </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = (bcgColor,smallIconColor) => StyleSheet.create({
   container: {
     marginHorizontal: wp("5%"),
   },
@@ -186,7 +196,8 @@ const styles = StyleSheet.create({
   },
   item: {
     display: "flex",
-    backgroundColor: "#f0fffd",
+    // backgroundColor: "#f0fffd",
+    backgroundColor: bcgColor,
     borderRadius: 10,
     padding: wp("4%"),
     flexDirection: "row",
@@ -209,8 +220,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: hp("5%"),
     height: hp("5%"),
-    backgroundColor: "#a0e7e1",
-    opacity: 0.8,
+    // backgroundColor: "#a0e7e1",
+    backgroundColor: smallIconColor,
+    // opacity: 0.8,
     borderRadius: hp("50%"),
   },
   itemText: {

@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
-  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
+  Image
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
+import { SvgUri } from "react-native-svg";
 
-const AvatarBox = ({ name, handleEdit }) => {
+const AvatarBox = ({ name, profilePicture, handleEdit, bcgColor }) => {
   const [editName, setEditName] = useState(name);
   const [editable, setEditable] = useState(false);
 
@@ -29,8 +30,8 @@ const AvatarBox = ({ name, handleEdit }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.AvatarOuterContainer}>
+    <View style={styles().container}>
+      <View style={styles(bcgColor).AvatarOuterContainer}>
         <View
           style={{
             width: wp("100%"),
@@ -46,7 +47,6 @@ const AvatarBox = ({ name, handleEdit }) => {
               underlayColor="#fff"
             >
               <Ionicons
-                // style={{ marginLeft: wp("2.3%") }}
                 name={"close-outline"}
                 size={hp("3%")}
                 color="black"
@@ -59,28 +59,29 @@ const AvatarBox = ({ name, handleEdit }) => {
             style={{ paddingLeft: 10 }}
           >
             <Ionicons
-              // style={{ marginLeft: wp("2.3%") }}
               name={editable ? "checkmark-outline" : "create-outline"}
               size={hp("3%")}
               color="black"
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.AvatarContainer}>
-          <Ionicons
+        <View style={styles().AvatarContainer}>
+          {console.log(profilePicture)}
+          <SvgUri uri={profilePicture} style={styles().avatar}/>
+          {/* <Ionicons
             name="person-outline"
             size={hp("15%")}
             color="#000"
-            style={styles.avatar}
-          />
-          <View style={styles.editContainer}>
+            style={styles().avatar}
+          /> */}
+          {/* <View style={styles.editContainer}>
             <Ionicons
               name="create-outline"
               size={hp("3%")}
               color="#000"
               style={{ textAlign: "center" }}
             />
-          </View>
+          </View> */}
         </View>
         {!editable ? (
           <Text
@@ -108,7 +109,7 @@ const AvatarBox = ({ name, handleEdit }) => {
 };
 export default AvatarBox;
 
-const styles = StyleSheet.create({
+const styles = (bcgColor) => StyleSheet.create({
   container: {
     display: "flex",
   },
@@ -116,7 +117,8 @@ const styles = StyleSheet.create({
     width: wp("100%"),
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#a0e7e1",
+    // backgroundColor: "#a0e7e1",
+    backgroundColor: bcgColor,
     borderBottomRightRadius: 70,
     padding: wp("5%"),
   },
@@ -139,7 +141,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 100,
     justifyContent: "center",
-    borderColor: "#000"
+    borderColor: "#000",
+    borderWidth: 0.3
   },
   editAvatar: {
     position: "absolute",
@@ -147,7 +150,8 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   avatar: {
-    //   test
+    width: '100%',
+    height: '100%',
   },
   input: {
     marginTop: 15,
