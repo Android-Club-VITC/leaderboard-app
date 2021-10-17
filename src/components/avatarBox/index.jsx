@@ -14,7 +14,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { SvgUri } from "react-native-svg";
 
-const AvatarBox = ({ name, profilePicture, handleEdit, bcgColor }) => {
+const AvatarBox = ({ name, profilePicture, handleEdit}) => {
   const [editName, setEditName] = useState(name);
   const [editable, setEditable] = useState(false);
 
@@ -30,8 +30,8 @@ const AvatarBox = ({ name, profilePicture, handleEdit, bcgColor }) => {
   };
 
   return (
-    <View style={styles().container}>
-      <View style={styles(bcgColor).AvatarOuterContainer}>
+    <View style={styles.container}>
+      <View style={styles.AvatarOuterContainer}>
         <View
           style={{
             width: wp("100%"),
@@ -65,8 +65,8 @@ const AvatarBox = ({ name, profilePicture, handleEdit, bcgColor }) => {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles().AvatarContainer}>
-          <SvgUri uri={profilePicture} style={styles().avatar}/>
+        <View style={styles.AvatarContainer}>
+          <SvgUri uri={profilePicture} style={styles.avatar}/>
           {/* <Ionicons
             name="person-outline"
             size={hp("15%")}
@@ -108,7 +108,7 @@ const AvatarBox = ({ name, profilePicture, handleEdit, bcgColor }) => {
 };
 export default AvatarBox;
 
-const styles = (bcgColor) => StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     display: "flex",
   },
@@ -116,8 +116,7 @@ const styles = (bcgColor) => StyleSheet.create({
     width: wp("100%"),
     flexDirection: "column",
     alignItems: "center",
-    // backgroundColor: "#a0e7e1",
-    backgroundColor: bcgColor,
+    backgroundColor: "#a0e7e1",
     borderBottomRightRadius: 70,
     padding: wp("5%"),
   },

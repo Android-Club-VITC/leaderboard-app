@@ -45,7 +45,7 @@ const Profile = () => {
         <Loader />
       ) : (
         <ScrollView style={styles.scrollView}>
-          <AvatarBox name={data.name} profilePicture={data.avatar} handleEdit={handleNameEdit} bcgColor="#0be881"/>
+          <AvatarBox name={data.name} profilePicture={data.avatar} handleEdit={handleNameEdit}/>
           {console.log(data.avatar)}
           <SocialSection
             linkedin={data.socials?.linkedin}
@@ -53,8 +53,6 @@ const Profile = () => {
             instagram={data.socials?.instagram}
             github={data.socials?.github}
             handleEdit={handleSocialsEdit}
-            bcgColor="#0be881"
-            smallIconColor="#fff"
           />
           <ContributionsSection />
         </ScrollView>
