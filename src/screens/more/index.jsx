@@ -6,17 +6,27 @@ import {
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export default function More(){
+export default function More({navigation}){
     return(
         <View style={styles.container}>
-            <View style={styles.optionBox}>
-                <Ionicons name="color-palette-outline" size={hp('4%')} /> 
-                <Text style={styles.optionName}>Change Theme</Text>
-            </View>
-            <View style={styles.optionBox}>
-                <Ionicons name="log-out-outline" size={hp('4%')} /> 
-                <Text style={styles.optionName}>Logout</Text>
-            </View>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("Org")}>
+                <View style={styles.optionBox}>
+                    <Ionicons name="briefcase-outline" size={hp('4%')} /> 
+                    <Text style={styles.optionName}>Change Organization</Text>
+                </View>
+            </TouchableOpacity> */}
+            <TouchableOpacity>
+                <View style={styles.optionBox}>
+                    <Ionicons name="color-palette-outline" size={hp('4%')} /> 
+                    <Text style={styles.optionName}>Change Theme</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <View style={styles.optionBox}>
+                    <Ionicons name="log-out-outline" size={hp('4%')} /> 
+                    <Text style={styles.optionName}>Logout</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }

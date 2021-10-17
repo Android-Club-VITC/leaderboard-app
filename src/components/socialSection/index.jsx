@@ -10,7 +10,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
 function Socialsectionbox({ name, iconname, editable, setSocials }) {
   const handleEdit = (v) => {
@@ -103,9 +103,9 @@ export default function SocialSection({
               underlayColor="#fff"
               style={{ paddingLeft: 10 }}
             >
-              <FontAwesome
+              <Ionicons
                 // style={{ marginLeft: wp("2.3%") }}
-                name={"close"}
+                name={"close-outline"}
                 size={hp("3%")}
                 color="black"
               />
@@ -115,9 +115,9 @@ export default function SocialSection({
             onPress={() => setEditable(!editable)}
             underlayColor="#fff"
           >
-            <FontAwesome
+            <Ionicons
               // style={{ marginLeft: wp("2.3%") }}
-              name={editable ? "check" : "edit"}
+              name={editable ? "checkmark-outline" : "create-outline"}
               size={hp("3%")}
               color="black"
             />

@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  StatusBar,
   TouchableOpacity,
 } from "react-native";
 import {
@@ -27,11 +26,10 @@ const TopBar = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
-
           <Text style={styles.text}>Profile</Text>
         </View>
 
-        <View style={styles.title}>
+        {/* <View style={styles.title}>
           <View style={styles.iconContainer}>
             <Ionicons
               name="stats-chart-outline"
@@ -41,20 +39,20 @@ const TopBar = ({ navigation }) => {
             />
           </View>
           <Text style={styles.text}>Ranking</Text>
-        </View>
+        </View> */}
 
         <View style={styles.title}>
           <View style={styles.iconContainer}>
           <TouchableOpacity onPress={() => navigation.navigate("Org")}>
             <Ionicons
-              name="information-outline"
+              name="briefcase-outline"
               size={hp("3.5%")}
               color="#a0e7e1"
               style={{ margin: "auto" }}
             />
           </TouchableOpacity>
           </View>
-          <Text style={styles.text}>Org</Text>
+          <Text style={styles.text}>Orgs</Text>
         </View>
 
         <View style={styles.title}>

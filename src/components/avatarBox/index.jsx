@@ -11,7 +11,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const AvatarBox = ({ name, handleEdit }) => {
   const [editName, setEditName] = useState(name);
@@ -22,6 +22,11 @@ const AvatarBox = ({ name, handleEdit }) => {
       handleEdit(editName);
     }
   }, [editable]);
+
+  const handleClose = () => {
+    setEditName(name);
+    setEditable(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -40,9 +45,9 @@ const AvatarBox = ({ name, handleEdit }) => {
               onPress={() => handleClose()}
               underlayColor="#fff"
             >
-              <FontAwesome
+              <Ionicons
                 // style={{ marginLeft: wp("2.3%") }}
-                name={"close"}
+                name={"close-outline"}
                 size={hp("3%")}
                 color="black"
               />
@@ -53,9 +58,9 @@ const AvatarBox = ({ name, handleEdit }) => {
             underlayColor="#fff"
             style={{ paddingLeft: 10 }}
           >
-            <FontAwesome
+            <Ionicons
               // style={{ marginLeft: wp("2.3%") }}
-              name={editable ? "check" : "edit"}
+              name={editable ? "checkmark-outline" : "create-outline"}
               size={hp("3%")}
               color="black"
             />
@@ -70,7 +75,7 @@ const AvatarBox = ({ name, handleEdit }) => {
           />
           <View style={styles.editContainer}>
             <Ionicons
-              name="person-outline"
+              name="create-outline"
               size={hp("3%")}
               color="#000"
               style={{ textAlign: "center" }}
@@ -134,6 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 100,
     justifyContent: "center",
+    borderColor: "#000"
   },
   editAvatar: {
     position: "absolute",

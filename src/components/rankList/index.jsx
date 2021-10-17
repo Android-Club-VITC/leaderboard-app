@@ -5,7 +5,6 @@ import {
   Text,
   View,
   FlatList,
-  RefreshControl,
   TouchableOpacity,
 } from "react-native";
 
@@ -14,6 +13,10 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
+import Loader from "../loader";
+//navigation
+import { useIsFocused } from "@react-navigation/native";
+
 // service
 import { getAllContribution } from "./service";
 
@@ -21,9 +24,10 @@ import { getAllContribution } from "./service";
 import { useAuth } from "../../provider/authManager";
 
 export default function RankList({ navigation }) {
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]);
   const { selectedOrg, orgs } = useAuth();
+  const isFocused = useIsFocused();
 
   const modelData = (res) => {
     const d = res.map((x, i) => {
@@ -38,20 +42,20 @@ export default function RankList({ navigation }) {
   };
 
   const getData = async () => {
-    setRefreshing(true);
+    setLoading(true);
     const res = await getAllContribution();
     const d = modelData(res);
     setData(d);
-    setRefreshing(false);
+    setLoading(false);
   };
 
-  const onRefresh = React.useCallback(() => {
+  useEffect(() => {
     getData();
   }, []);
 
   useEffect(() => {
     getData();
-  }, [selectedOrg]);
+  }, [selectedOrg,isFocused]);
 
   const RenderLine = ({ rank }) => {
     if (rank != data.length) {
@@ -93,18 +97,16 @@ export default function RankList({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={Item}
-        keyExtractor={(item) => item.id}
-        refreshControl={
-          <RefreshControl
-            onRefresh={onRefresh}
-            colors={["#ff0000", "#00ff00", "#0000ff"]}
-            refreshing={refreshing}
-          />
-        }
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+          <FlatList
+          data={data}
+          renderItem={Item}
+          keyExtractor={(item) => item.id}
+        />
+      )}
+      
       <StatusBar style="auto" />
     </View>
   );
