@@ -19,3 +19,13 @@ export const getToken = async () => {
         return null;
     }
 }
+
+export const deleteToken = async () => {
+    try {
+        await AsyncStorage.removeItem("AC_TOKEN");
+        return true;
+    } catch(e) {
+        console.log(e);
+        return false;
+    }
+}

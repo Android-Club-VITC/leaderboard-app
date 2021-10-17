@@ -5,8 +5,11 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useAuth } from '../../provider/authManager';
 
 export default function More({navigation}){
+    const { logout } = useAuth();
+
     return(
         <View style={styles.container}>
             {/* <TouchableOpacity onPress={() => navigation.navigate("Org")}>
@@ -21,7 +24,7 @@ export default function More({navigation}){
                     <Text style={styles.optionName}>Change Theme</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>logout()}>
                 <View style={styles.optionBox}>
                     <Ionicons name="log-out-outline" size={hp('4%')} /> 
                     <Text style={styles.optionName}>Logout</Text>

@@ -66,7 +66,6 @@ const AvatarBox = ({ name, profilePicture, handleEdit, bcgColor }) => {
           </TouchableOpacity>
         </View>
         <View style={styles().AvatarContainer}>
-          {console.log(profilePicture)}
           <SvgUri uri={profilePicture} style={styles().avatar}/>
           {/* <Ionicons
             name="person-outline"

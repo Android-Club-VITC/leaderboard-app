@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-import { storeToken, getToken } from "../service/asyncStorage";
+import { storeToken, getToken, deleteToken } from "../service/asyncStorage";
 import URL from "../utils/endpoint";
 
 import Loader from "../components/loader";
@@ -64,7 +64,14 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const logout = () => {};
+  const logout = async () => {
+    setLoading(true);
+    await deleteToken();
+    axios.defaults.headers.common["AC_TOKEN"] = "";
+    axios.defaults.headers.common["AC_ORGID"] = "";    
+    setIsLoggedIn(false);
+    setLoading(false);
+  };
 
   const verify = async () => {
     setLoading(true);

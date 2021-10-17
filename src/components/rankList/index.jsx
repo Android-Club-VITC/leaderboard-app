@@ -26,8 +26,10 @@ import { useAuth } from "../../provider/authManager";
 export default function RankList({ navigation }) {
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]);
-  const { selectedOrg, orgs } = useAuth();
+  const [currOrg, setCurrOrg] = React.useState("");
+  const { selectedOrg } = useAuth();
   const isFocused = useIsFocused();
+
 
   const modelData = (res) => {
     const d = res.map((x, i) => {
@@ -50,12 +52,16 @@ export default function RankList({ navigation }) {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    if(!isFocused) {
+      setCurrOrg(selectedOrg._id);
+    }
+  }, [isFocused])
 
   useEffect(() => {
-    getData();
-  }, [selectedOrg, isFocused]);
+    if (isFocused && currOrg != selectedOrg._id) {
+      getData();
+    }
+  }, [isFocused]);
 
   const RenderLine = ({ rank }) => {
     if (rank != data.length) {
