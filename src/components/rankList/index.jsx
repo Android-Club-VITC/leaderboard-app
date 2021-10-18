@@ -88,7 +88,6 @@ export default function RankList({ navigation }) {
   const Item = ({ item }) => {
     return (
       <TouchableOpacity onLongPress={() => navigation.navigate("Profile")}>
-        {/* <View style={{ marginLeft: wp("5%") }}> */}
         <View style={styles.tile}>
           <View>
             <View style={[styles.leading,themeContainerStyle]}>
@@ -101,18 +100,16 @@ export default function RankList({ navigation }) {
             </View>
           </View>
           <View>
-            <Text style={styles.tiletext}>{item.name}</Text>
-            <Text style={styles.tiletextsmall}>{`score: ${item.score}`}</Text>
+            <Text style={[styles.tiletext,themeTextStyle]}>{item.name}</Text>
+            <Text style={[styles.tiletextsmall,themeTextStyle]}>{`score: ${item.score}`}</Text>
           </View>
         </View>
-
-        {/* </View> */}
       </TouchableOpacity>
     );
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,themeStyle]}>
       {loading ? (
         <Loader />
       ) : (
@@ -122,8 +119,6 @@ export default function RankList({ navigation }) {
           keyExtractor={(item) => item.id}
         />
       )}
-
-      <StatusBar style="auto" />
     </View>
   );
 }
@@ -131,7 +126,7 @@ export default function RankList({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#182C61",
     alignItems: "center",
     justifyContent: "center",
     paddingTop: hp("2%"),
@@ -169,7 +164,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   lightThemeTextColor: {
-    color: "#ffffff"
+    color: "#000000"
   },
   darkThemeTextColor: {
     color: "#ffffff"
@@ -178,12 +173,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   darkThemeColor: {
-    backgroundColor: "#ffffff"
+    backgroundColor: "#182C61"
   },
   lightContainerColor: {
     backgroundColor: "#26de81"
   },
   darkContainerColor: {
-    backgroundColor: "#4b4b4b"
+    backgroundColor: "#3B3B98"
   }
 });

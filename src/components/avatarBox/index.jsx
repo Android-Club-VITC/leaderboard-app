@@ -19,7 +19,8 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
   const [editable, setEditable] = useState(false);
 
   const colorScheme = Appearance.getColorScheme();
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
+  const themeStyle = colorScheme === 'light' ? styles.lightContainerColor2 : styles.darkContainerColor2;
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,themeStyle]}>
       <View style={[styles.AvatarOuterContainer,themeContainerStyle]}>
         <View
           style={{
@@ -53,7 +54,7 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
               <Ionicons
                 name={"close-outline"}
                 size={hp("3%")}
-                color="black"
+                style={[themeTextStyle]}
               />
             </TouchableOpacity>
           )}
@@ -65,7 +66,7 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
             <Ionicons
               name={editable ? "checkmark-outline" : "create-outline"}
               size={hp("3%")}
-              color="black"
+              style={[themeTextStyle]}
             />
           </TouchableOpacity>
         </View>
@@ -88,7 +89,7 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
           </Text>
         ) : (
           <TextInput
-            style={styles.input}
+            style={[styles.input,themeTextStyle]}
             onChangeText={setEditName}
             value={editName}
             placeholder={`enter name`}
@@ -157,16 +158,25 @@ const styles = StyleSheet.create({
     fontSize: hp("3%"),
     fontWeight: "bold",
   },
-  lightThemeColor: {
-    color: "#ffffff"
+  iconColor: {
+
   },
-  darkThemeColor: {
+  lightThemeTextColor: {
+    color: "#000000"
+  },
+  darkThemeTextColor: {
     color: "#ffffff"
   },
   lightContainerColor: {
     backgroundColor: "#26de81",
   },
   darkContainerColor: {
-    backgroundColor: "#3867d6"
+    backgroundColor: "#3B3B98"
+  },
+  lightContainerColor2: {
+    backgroundColor: "#ffffff",
+  },
+  darkContainerColor2: {
+    backgroundColor: "#182C61"
   }
 });

@@ -16,11 +16,12 @@ const TopBar = ({ navigation }) => {
 
   const colorScheme = Appearance.getColorScheme();
   const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeIconStyle = colorScheme === 'light' ? styles.lightThemeIconColor : styles.darkThemeIconColor;
   const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
 
   return (
-    <View style={styles.topContainer}>
+    <View style={[styles.topContainer,themeStyle]}>
       <View style={[styles.topBar,themeContainerStyle]}>
         <View style={styles.title}>
           <View style={styles.iconContainer}>
@@ -28,12 +29,11 @@ const TopBar = ({ navigation }) => {
               <Ionicons
                 name="person-outline"
                 size={hp("3.5%")}
-                // color="#a0e7e1"
-                style={[{ margin: "auto" },themeTextStyle]}
+                style={[{ margin: "auto" },themeIconStyle]}
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.text}>Profile</Text>
+          <Text style={[styles.text,themeTextStyle]}>Profile</Text>
         </View>
 
         {/* <View style={styles.title}>
@@ -54,12 +54,11 @@ const TopBar = ({ navigation }) => {
             <Ionicons
               name="briefcase-outline"
               size={hp("3.5%")}
-              color="#a0e7e1"
-              style={[{ margin: "auto" },themeTextStyle]}
+              style={[{ margin: "auto" },themeIconStyle]}
             />
           </TouchableOpacity>
           </View>
-          <Text style={styles.text}>Orgs</Text>
+          <Text style={[styles.text,themeTextStyle]}>Orgs</Text>
         </View>
 
         <View style={styles.title}>
@@ -68,12 +67,11 @@ const TopBar = ({ navigation }) => {
             <Ionicons
               name="information-outline"
               size={hp("3.5%")}
-              color="#a0e7e1"
-              style={[{ margin: "auto" },themeTextStyle]}
+              style={[{ margin: "auto" },themeIconStyle]}
             />
           </TouchableOpacity>
           </View>
-          <Text style={styles.text}>More</Text>
+          <Text style={[styles.text,themeTextStyle]}>More</Text>
         </View>
       </View>
     </View>
@@ -83,7 +81,7 @@ export default TopBar;
 
 const styles = StyleSheet.create({
   topContainer: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#",
   },
   topBar: {
     display: "flex",
@@ -95,7 +93,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 20,
   },
-
   title: {
     // bottom: hp("2%"),
     width: wp("24%"),
@@ -117,7 +114,6 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
   },
-
   topColourView: {
     flex: 0.5,
     backgroundColor: "#78ddd4",
@@ -126,22 +122,28 @@ const styles = StyleSheet.create({
     marginBottom: hp("1.75%"),
     flex: 0.2,
   },
-  lightThemeTextColor: {
+  lightThemeIconColor: {
     color: "#26de81"
   },
-  darkThemeTextColor: {
+  darkThemeIconColor: {
     color: "#000000"
+  },
+  lightThemeTextColor: {
+    color: "#000000"
+  },
+  darkThemeTextColor: {
+    color: "#ffffff"
   },
   lightThemeColor: {
     backgroundColor: "#ffffff",
   },
   darkThemeColor: {
-    backgroundColor: "#ffffff"
+    backgroundColor: "#182C61"
   },
   lightContainerColor: {
     backgroundColor: "#26de81"
   },
   darkContainerColor: {
-    backgroundColor: "#4b4b4b"
+    backgroundColor: "#3B3B98"
   }
 });

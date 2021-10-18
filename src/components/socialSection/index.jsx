@@ -33,7 +33,7 @@ function Socialsectionbox({ name, iconname, editable, setSocials}) {
             // style={{ marginLeft: wp("2.3%") }}
             name={iconname}
             size={hp("3.5%")}
-            color="black"
+            style={themeTextStyle}
           />
         </View>
       </View>
@@ -60,6 +60,10 @@ export default function SocialSection({
   github,
   handleEdit,
 }) {
+  const colorScheme = Appearance.getColorScheme();
+  const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
+
   const [socials, setSocials] = useState({
     discord,
     instagram,
@@ -93,9 +97,9 @@ export default function SocialSection({
   }, [editable]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,themeStyle]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Social</Text>
+        <Text style={[styles.title,themeTextStyle]}>Social</Text>
         <View
           style={{
             flexDirection: "row",
@@ -113,7 +117,7 @@ export default function SocialSection({
                 // style={{ marginLeft: wp("2.3%") }}
                 name={"close-outline"}
                 size={hp("3%")}
-                color="black"
+                style={themeTextStyle}
               />
             </TouchableOpacity>
           )}
@@ -125,7 +129,7 @@ export default function SocialSection({
               // style={{ marginLeft: wp("2.3%") }}
               name={editable ? "checkmark-outline" : "create-outline"}
               size={hp("3%")}
-              color="black"
+              style={themeTextStyle}
             />
           </TouchableOpacity>
         </View>
@@ -162,7 +166,7 @@ export default function SocialSection({
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: wp("5%"),
+    paddingHorizontal: wp("5%"),
   },
   header: {
     flexDirection: "row",
@@ -242,12 +246,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   darkThemeColor: {
+    backgroundColor: "#182C61"
+  },
+  lightThemeColor2: {
+    backgroundColor: "#ffffff",
+  },
+  darkThemeColor2: {
     backgroundColor: "#ffffff"
   },
   lightContainerColor: {
     backgroundColor: "#7fffbd"
   },
   darkContainerColor: {
-    backgroundColor: "#4b4b4b"
+    backgroundColor: "#3B3B98"
   }
 });
