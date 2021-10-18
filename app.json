@@ -18,9 +18,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.androidclub.leaderboard",
+      "buildNumber": "1.0.0"
     },
     "android": {
+      "package": "com.androidclub.leaderboard",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
