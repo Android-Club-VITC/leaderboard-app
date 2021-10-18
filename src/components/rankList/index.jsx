@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Appearance
 } from "react-native";
 
 import {
@@ -30,6 +31,10 @@ export default function RankList({ navigation }) {
   const { selectedOrg } = useAuth();
   const isFocused = useIsFocused();
 
+  const colorScheme = Appearance.getColorScheme();
+  const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
 
   const modelData = (res) => {
     const d = res.map((x, i) => {
@@ -86,8 +91,8 @@ export default function RankList({ navigation }) {
         {/* <View style={{ marginLeft: wp("5%") }}> */}
         <View style={styles.tile}>
           <View>
-            <View style={styles.leading}>
-              <Text style={{ fontSize: hp("3"), color: "white" }}>
+            <View style={[styles.leading,themeContainerStyle]}>
+              <Text style={[{ fontSize: hp("3") },themeTextStyle]}>
                 {item.rank}
               </Text>
             </View>
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
-    backgroundColor: "#99ddd9",
+    // backgroundColor: "#99ddd9",
   },
   tiletext: {
     marginLeft: 40,
@@ -163,4 +168,22 @@ const styles = StyleSheet.create({
     color: "grey",
     flexWrap: "wrap",
   },
+  lightThemeTextColor: {
+    color: "#ffffff"
+  },
+  darkThemeTextColor: {
+    color: "#ffffff"
+  },
+  lightThemeColor: {
+    backgroundColor: "#ffffff",
+  },
+  darkThemeColor: {
+    backgroundColor: "#ffffff"
+  },
+  lightContainerColor: {
+    backgroundColor: "#26de81"
+  },
+  darkContainerColor: {
+    backgroundColor: "#4b4b4b"
+  }
 });

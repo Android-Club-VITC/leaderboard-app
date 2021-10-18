@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Appearance
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -12,17 +13,23 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 const TopBar = ({ navigation }) => {
+
+  const colorScheme = Appearance.getColorScheme();
+  const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
+
   return (
     <View style={styles.topContainer}>
-      <View style={styles.topBar}>
+      <View style={[styles.topBar,themeContainerStyle]}>
         <View style={styles.title}>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
               <Ionicons
                 name="person-outline"
                 size={hp("3.5%")}
-                color="#a0e7e1"
-                style={{ margin: "auto" }}
+                // color="#a0e7e1"
+                style={[{ margin: "auto" },themeTextStyle]}
               />
             </TouchableOpacity>
           </View>
@@ -48,7 +55,7 @@ const TopBar = ({ navigation }) => {
               name="briefcase-outline"
               size={hp("3.5%")}
               color="#a0e7e1"
-              style={{ margin: "auto" }}
+              style={[{ margin: "auto" },themeTextStyle]}
             />
           </TouchableOpacity>
           </View>
@@ -62,7 +69,7 @@ const TopBar = ({ navigation }) => {
               name="information-outline"
               size={hp("3.5%")}
               color="#a0e7e1"
-              style={{ margin: "auto" }}
+              style={[{ margin: "auto" },themeTextStyle]}
             />
           </TouchableOpacity>
           </View>
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "stretch",
-    backgroundColor: "#a0e7e1",
+    // backgroundColor: "#a0e7e1",
     borderBottomRightRadius: 70,
     paddingBottom: 20,
     paddingTop: 20,
@@ -119,4 +126,22 @@ const styles = StyleSheet.create({
     marginBottom: hp("1.75%"),
     flex: 0.2,
   },
+  lightThemeTextColor: {
+    color: "#26de81"
+  },
+  darkThemeTextColor: {
+    color: "#000000"
+  },
+  lightThemeColor: {
+    backgroundColor: "#ffffff",
+  },
+  darkThemeColor: {
+    backgroundColor: "#ffffff"
+  },
+  lightContainerColor: {
+    backgroundColor: "#26de81"
+  },
+  darkContainerColor: {
+    backgroundColor: "#4b4b4b"
+  }
 });

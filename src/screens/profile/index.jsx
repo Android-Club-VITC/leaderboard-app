@@ -46,7 +46,6 @@ const Profile = () => {
       ) : (
         <ScrollView style={styles.scrollView}>
           <AvatarBox name={data.name} profilePicture={data.avatar} handleEdit={handleNameEdit}/>
-          {console.log(data.avatar)}
           <SocialSection
             linkedin={data.socials?.linkedin}
             discord={data.socials?.discord}

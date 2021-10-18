@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Appearance
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -19,10 +20,15 @@ function Socialsectionbox({ name, iconname, editable, setSocials}) {
     });
   };
 
+  const colorScheme = Appearance.getColorScheme();
+  const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
+
   return (
-    <View style={styles.item}>
+    <View style={[styles.item,themeContainerStyle]}>
       <View style={styles.itemLeft}>
-        <View style={styles.circle}>
+        <View style={[styles.circle,themeStyle]}>
           <FontAwesome5
             // style={{ marginLeft: wp("2.3%") }}
             name={iconname}
@@ -32,9 +38,9 @@ function Socialsectionbox({ name, iconname, editable, setSocials}) {
         </View>
       </View>
       <View style={styles.itemRight}>
-        <Text style={styles.itemText}>{iconname.toUpperCase()}</Text>
+        <Text style={[styles.itemText,themeTextStyle]}>{iconname.toUpperCase()}</Text>
         {!editable ? (
-          <Text style={styles.itemSubText}>{name}</Text>
+          <Text style={[styles.itemSubText,themeTextStyle]}>{name}</Text>
         ) : (
           <TextInput
             style={styles.input}
@@ -209,8 +215,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: hp("5%"),
     height: hp("5%"),
-    backgroundColor: "#a0e7e1",
-    opacity: 0.8,
+    // backgroundColor: "#fff",
+    // opacity: 0.8,
     borderRadius: hp("50%"),
   },
   itemText: {
@@ -222,8 +228,26 @@ const styles = StyleSheet.create({
     fontWeight: "200",
   },
   input: {
-    borderWidth: 0.2,
+    borderWidth: 0.0,
     width: wp("40%"),
     padding: 3,
   },
+  lightThemeTextColor: {
+    color: "#000000"
+  },
+  darkThemeTextColor: {
+    color: "#ffffff"
+  },
+  lightThemeColor: {
+    backgroundColor: "#ffffff",
+  },
+  darkThemeColor: {
+    backgroundColor: "#ffffff"
+  },
+  lightContainerColor: {
+    backgroundColor: "#7fffbd"
+  },
+  darkContainerColor: {
+    backgroundColor: "#4b4b4b"
+  }
 });
