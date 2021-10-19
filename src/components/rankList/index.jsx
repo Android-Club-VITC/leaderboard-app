@@ -114,6 +114,7 @@ export default function RankList({ navigation }) {
         <Loader />
       ) : (
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={data}
           renderItem={Item}
           keyExtractor={(item) => item.id}

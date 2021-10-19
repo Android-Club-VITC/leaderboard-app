@@ -4,12 +4,14 @@ import AvatarBox from "../../components/avatarBox";
 import SocialSection from "../../components/socialSection";
 import ContributionsSection from "../../components/contributionsSection";
 import Loader from "../../components/loader";
+import Timeline from "../../components/timeline";
 
-import { getUserInfoService, editSocialsService, editNameService } from "./services";
+import { getUserInfoService, editSocialsService, editNameService, getContributionService } from "./services";
 import { useAuth } from "../../provider/authManager";
 
 const Profile = () => {
   const [data, setData] = useState({});
+  const [contrib, setContrib] = useState({});
   const [loading, setLoading] = useState(false);
   const { email } = useAuth();
 
@@ -27,8 +29,10 @@ const Profile = () => {
 
   const getData = async () => {
     setLoading(true);
-    const res = await getUserInfoService(email);
-    setData(res);
+    const res1 = await getUserInfoService(email);
+    const res2 = await getContributionService(email)
+    setData(res1);
+    setContrib(res2);
   };
 
   useEffect(() => {
@@ -53,7 +57,8 @@ const Profile = () => {
             github={data.socials?.github}
             handleEdit={handleSocialsEdit}
           />
-          <ContributionsSection />
+          <Timeline data={contrib} />
+          {/* <ContributionsSection /> */}
         </ScrollView>
       )}
     </>

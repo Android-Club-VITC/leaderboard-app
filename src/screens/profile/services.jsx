@@ -30,3 +30,13 @@ export const editNameService = async (email, name) => {
     return false;
   }
 };
+
+export const getContributionService = async (email) => {
+  try {
+    const res = await axios.post(`${URL}/api/member/getContribution`, {email});
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+};

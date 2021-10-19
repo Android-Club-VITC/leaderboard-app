@@ -17,7 +17,6 @@ import { SvgUri } from "react-native-svg";
 const AvatarBox = ({ name, profilePicture, handleEdit}) => {
   const [editName, setEditName] = useState(name);
   const [editable, setEditable] = useState(false);
-
   const colorScheme = Appearance.getColorScheme();
   const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
   const themeStyle = colorScheme === 'light' ? styles.lightContainerColor2 : styles.darkContainerColor2;
