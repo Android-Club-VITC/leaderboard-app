@@ -81,7 +81,7 @@ export default function Timeline({ data }) {
           data={modelData(data.timeline)}
           renderItem={Item}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingLeft: wp("10%") }}
+          contentContainerStyle={{ paddingLeft: wp("2%") }}
         />
       )}
     </View>
@@ -94,8 +94,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#7fffbd",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: hp("3%"),
-    marginBottom: 20,
     margin: hp("3%"),
     borderRadius: 8,
     elevation: 20,
@@ -108,15 +106,15 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     backgroundColor: "#fff",
-    marginLeft: 30,
-    marginRight: 30,
+    marginLeft: 20,
+    marginRight: 20,
     borderColor: "blue",
     borderWidth: 1,
   },
   title: {
     fontWeight: "bold",
     fontSize: 24,
-    paddingBottom: 30,
+    paddingVertical: 30,
   },
   points: {
     backgroundColor: "#000",
