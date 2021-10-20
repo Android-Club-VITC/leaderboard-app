@@ -71,7 +71,7 @@ export default function Timeline({ data }) {
 
   return (
     <View style={[styles.container]}>
-      <Text style={styles.title}>Contributions</Text>
+      {data?.timeline && data.timeline.length > 0 && <Text style={styles.title}>Contributions</Text>}
       {!data?.timeline ? (
         <Loader />
       ) : (
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: hp("3%"),
+    marginBottom: 20,
     margin: hp("3%"),
     borderRadius: 8,
     elevation: 20,

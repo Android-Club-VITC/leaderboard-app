@@ -59,6 +59,7 @@ export default function SocialSection({
   discord,
   github,
   handleEdit,
+  showEdit=true
 }) {
   const colorScheme = Appearance.getColorScheme();
   const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
@@ -72,6 +73,7 @@ export default function SocialSection({
   });
   const [editable, setEditable] = useState(false);
 
+  if(showEdit) {
   const handleClose = () => {
     setSocials({
       linkedin,
@@ -95,7 +97,7 @@ export default function SocialSection({
       }
     }
   }, [editable]);
-
+  }
   return (
     <View style={[styles.container,themeStyle]}>
       <View style={styles.header}>
@@ -107,7 +109,7 @@ export default function SocialSection({
             justifyContent: editable ? "space-between" : "flex-end",
           }}
         >
-          {editable && (
+          {editable && showEdit && (
             <TouchableOpacity
               onPress={() => handleClose()}
               underlayColor="#fff"
@@ -121,7 +123,7 @@ export default function SocialSection({
               />
             </TouchableOpacity>
           )}
-          <TouchableOpacity
+          {showEdit && <TouchableOpacity
             onPress={() => setEditable(!editable)}
             underlayColor="#fff"
           >
@@ -131,32 +133,32 @@ export default function SocialSection({
               size={hp("3%")}
               style={themeTextStyle}
             />
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
       </View>
       <View style={styles.itembox}>
         <Socialsectionbox
           name={discord}
           iconname="discord"
-          editable={editable}
+          editable={editable & showEdit}
           setSocials={setSocials}
         />
         <Socialsectionbox
           name={instagram}
           iconname="instagram"
-          editable={editable}
+          editable={editable & showEdit}
           setSocials={setSocials}
         />
         <Socialsectionbox
           name={linkedin}
           iconname="linkedin"
-          editable={editable}
+          editable={editable & showEdit}
           setSocials={setSocials}
         />
         <Socialsectionbox
           name={github}
           iconname="github"
-          editable={editable}
+          editable={editable & showEdit}
           setSocials={setSocials}
         />
       </View>

@@ -14,7 +14,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { SvgUri } from "react-native-svg";
 
-const AvatarBox = ({ name, profilePicture, handleEdit}) => {
+const AvatarBox = ({ name, profilePicture, handleEdit, showEdit=true}) => {
   const [editName, setEditName] = useState(name);
   const [editable, setEditable] = useState(false);
   const colorScheme = Appearance.getColorScheme();
@@ -22,17 +22,18 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
   const themeStyle = colorScheme === 'light' ? styles.lightContainerColor2 : styles.darkContainerColor2;
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
 
-  useEffect(() => {
-    if (!editable && editName != name) {
-      handleEdit(editName);
-    }
-  }, [editable]);
+  if (showEdit) {
+    useEffect(() => {
+      if (!editable && editName != name) {
+        handleEdit(editName);
+      }
+    }, [editable]);
 
-  const handleClose = () => {
-    setEditName(name);
-    setEditable(false);
-  };
-
+    const handleClose = () => {
+      setEditName(name);
+      setEditable(false);
+    };
+  }
   return (
     <View style={[styles.container,themeStyle]}>
       <View style={[styles.AvatarOuterContainer,themeContainerStyle]}>
@@ -45,7 +46,7 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
             paddingRight: 15,
           }}
         >
-          {editable && (
+          {editable && showEdit && (
             <TouchableOpacity
               onPress={() => handleClose()}
               underlayColor="#fff"
@@ -57,7 +58,7 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
               />
             </TouchableOpacity>
           )}
-          <TouchableOpacity
+          {showEdit && <TouchableOpacity
             onPress={() => setEditable(!editable)}
             underlayColor="#fff"
             style={{ paddingLeft: 10 }}
@@ -67,17 +68,17 @@ const AvatarBox = ({ name, profilePicture, handleEdit}) => {
               size={hp("3%")}
               style={[themeTextStyle]}
             />
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
         <View style={styles.AvatarContainer}>
           <SvgUri uri={profilePicture} style={styles.avatar}/>
           <View style={styles.editContainer}>
-            <Ionicons
+            {showEdit && <Ionicons
               name="create-outline"
               size={hp("3%")}
               color="#000"
               style={{ textAlign: "center" }}
-            />
+            />}
           </View>
         </View>
         {!editable ? (

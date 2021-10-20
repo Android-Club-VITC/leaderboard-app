@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -24,7 +24,7 @@ import { getAllContribution } from "./service";
 // auth
 import { useAuth } from "../../provider/authManager";
 
-export default function RankList({ navigation }) {
+export default function RankList({ navigation, setProfile }) {
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]);
   const [currOrg, setCurrOrg] = React.useState("");
@@ -43,6 +43,7 @@ export default function RankList({ navigation }) {
         name: x.member.name,
         id: `rank-${i + 1}`,
         score: x.score,
+        email: x.email
       };
     });
     return d;
@@ -76,7 +77,8 @@ export default function RankList({ navigation }) {
             width: wp("1.5"),
             height: hp("2.5"),
             backgroundColor: "black",
-            alignSelf: 'center'
+            alignSelf: 'center',
+            elevation: 10
           }}
         ></View>
       );
@@ -87,7 +89,8 @@ export default function RankList({ navigation }) {
 
   const Item = ({ item }) => {
     return (
-      <TouchableOpacity onLongPress={() => navigation.navigate("Profile")}>
+      <>
+      <TouchableOpacity onLongPress={() => setProfile(item.email)}>
         <View style={styles.tile}>
           <View>
             <View style={[styles.leading,themeContainerStyle]}>
@@ -105,6 +108,7 @@ export default function RankList({ navigation }) {
           </View>
         </View>
       </TouchableOpacity>
+      </>
     );
   };
 
@@ -139,8 +143,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-start",
-    // backgroundColor: "red",
+    justifyContent: "flex-start"
   },
   leading: {
     width: hp("7"),
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 30,
+    borderRadius: 30
     // backgroundColor: "#99ddd9",
   },
   tiletext: {
