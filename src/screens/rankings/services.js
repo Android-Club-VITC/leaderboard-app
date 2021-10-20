@@ -6,7 +6,6 @@ export const getUserInfoService = async (email) => {
     const res = await axios.post(`${URL}/api/member/getInfo`, {
       email,
     });
-    console.log(res.data);
     return res.data;
   } catch (e) {
     return {};
@@ -18,7 +17,6 @@ export const getUserContribService = async (email) => {
     const res = await axios.post(`${URL}/api/member/getContribution`, {
       email,
     });
-    console.log(res.data);
     return res.data;
   } catch (e) {
     return res.data;
