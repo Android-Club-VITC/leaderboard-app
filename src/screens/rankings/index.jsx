@@ -6,29 +6,29 @@ import RankList from "../../components/rankList";
 import ProfileModal from "./components/profileModal";
 
 const Rankings = ({navigation}) => {
-  const [email,setEmail] = useState("")
+  const [profile,setProfile] = useState("")
   const [modalVisible, setModalVisible] = useState(false);
 
-  const setProfile = (e) => {
-    if (email!=e) {
-      setEmail(e)
+  const handleProfile = (e) => {
+    if (profile!=e) {
+      setProfile(e)
     } else [
       setModalVisible(true)
     ]
   }
 
   useEffect(() => {
-    if(email) {
+    if(profile) {
       setModalVisible(true);
     } 
-  }, [email])
+  }, [profile])
 
   
   return (
     <View style={styles.container_outer}>
-      <ProfileModal email={email} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <ProfileModal data={profile} modalVisible={modalVisible} setModalVisible={setModalVisible} />
       <TopBar navigation={navigation} />
-      <RankList navigation={navigation} setProfile={setProfile}/>
+      <RankList navigation={navigation} setProfile={handleProfile}/>
     </View>
   );
 };

@@ -40,7 +40,8 @@ export default function RankList({ navigation, setProfile }) {
     const d = res.map((x, i) => {
       return {
         rank: i + 1,
-        name: x.member.name,
+        member: x.member,
+        timeline: x.timeline,
         id: `rank-${i + 1}`,
         score: x.score,
         email: x.email
@@ -90,7 +91,7 @@ export default function RankList({ navigation, setProfile }) {
   const Item = ({ item }) => {
     return (
       <>
-      <TouchableOpacity onLongPress={() => setProfile(item.email)}>
+      <TouchableOpacity onPress={() => setProfile({ member: item.member, timeline: item.timeline })}>
         <View style={styles.tile}>
           <View>
             <View style={[styles.leading,themeContainerStyle]}>
@@ -103,7 +104,7 @@ export default function RankList({ navigation, setProfile }) {
             </View>
           </View>
           <View>
-            <Text style={[styles.tiletext,themeTextStyle]}>{item.name}</Text>
+            <Text style={[styles.tiletext,themeTextStyle]}>{item.member.name}</Text>
             <Text style={[styles.tiletextsmall,themeTextStyle]}>{`score: ${item.score}`}</Text>
           </View>
         </View>

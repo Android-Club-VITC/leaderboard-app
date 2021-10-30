@@ -29,10 +29,10 @@ const Profile = () => {
 
   const getData = async () => {
     setLoading(true);
-    const res1 = await getUserInfoService(email);
-    const res2 = await getContributionService(email)
-    setData(res1);
-    setContrib(res2);
+    //const res1 = await getUserInfoService(email);
+    const res = await getContributionService(email)
+    setData(res.member);
+    setContrib({timeline: res.timeline});
   };
 
   useEffect(() => {

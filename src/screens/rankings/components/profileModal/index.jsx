@@ -22,22 +22,15 @@ import Timeline from "../../../../components/timeline";
 // service
 import { getUserInfoService, getUserContribService } from "../../services";
 
-function Profile({ email }) {
+function Profile({ userData }) {
   const [data, setData] = useState({});
   const [contrib, setContrib] = useState({});
-  const [loading, setLoading] = useState(false);
+  
+  const getData = () => {
 
-  const getData = async () => {
-    setLoading(true);
-    const res1 = await getUserInfoService(email);
-    const res2 = await getUserContribService(email);
-    setData(res1);
-    setContrib(res2);
+    setData(userData?.member);
+    setContrib({timeline: userData?.timeline});
   };
-
-  useEffect(() => {
-    setLoading(false);
-  }, [data]);
 
   useEffect(() => {
     getData();
@@ -45,9 +38,6 @@ function Profile({ email }) {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
         <ScrollView contentContainerStyle={{
             paddingBottom: 40
         }}>
@@ -68,12 +58,11 @@ function Profile({ email }) {
           {/* <ContributionsSection /> */}
         </View>
         </ScrollView>
-      )}
     </>
   );
 }
 
-export default function ProfileModal({ modalVisible, setModalVisible, email }) {
+export default function ProfileModal({ modalVisible, setModalVisible, data }) {
   return (
     <Modal
       animationType="slide"
@@ -95,7 +84,7 @@ export default function ProfileModal({ modalVisible, setModalVisible, email }) {
               size={hp("6%")}
             />
           </Pressable>
-          {modalVisible && <Profile email={email} />}
+          {modalVisible && <Profile userData={data} />}
         </View>
       </View>
     </Modal>
