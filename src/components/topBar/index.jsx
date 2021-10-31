@@ -12,8 +12,10 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 
-const TopBar = ({ navigation }) => {
+import { useAuth } from '../../provider/authManager';
 
+const TopBar = ({ navigation }) => {
+  const { logout } = useAuth();
   const colorScheme = Appearance.getColorScheme();
   const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
   const themeIconStyle = colorScheme === 'light' ? styles.lightThemeIconColor : styles.darkThemeIconColor;
@@ -36,18 +38,6 @@ const TopBar = ({ navigation }) => {
           <Text style={[styles.text,themeTextStyle]}>Profile</Text>
         </View>
 
-        {/* <View style={styles.title}>
-          <View style={styles.iconContainer}>
-            <Ionicons
-              name="stats-chart-outline"
-              size={hp("3.5%")}
-              color="#a0e7e1"
-              style={{ margin: "auto" }}
-            />
-          </View>
-          <Text style={styles.text}>Ranking</Text>
-        </View> */}
-
         <View style={styles.title}>
           <View style={styles.iconContainer}>
           <TouchableOpacity onPress={() => navigation.navigate("Org")}>
@@ -63,15 +53,15 @@ const TopBar = ({ navigation }) => {
 
         <View style={styles.title}>
           <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("More")}>
+          <TouchableOpacity onPress={()=>logout()}>
             <Ionicons
-              name="information-outline"
+              name="log-out-outline"
               size={hp("3.5%")}
               style={[{ margin: "auto" },themeIconStyle]}
             />
           </TouchableOpacity>
           </View>
-          <Text style={[styles.text,themeTextStyle]}>More</Text>
+          <Text style={[styles.text,themeTextStyle]}>Logout</Text>
         </View>
       </View>
     </View>

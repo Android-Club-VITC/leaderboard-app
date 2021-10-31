@@ -1,12 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Appearance,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList, Appearance } from "react-native";
 
 import {
   widthPercentageToDP as wp,
@@ -16,7 +9,6 @@ import {
 import Loader from "../loader";
 
 export default function Timeline({ data }) {
-
   const colorScheme = Appearance.getColorScheme();
   const themeStyle =
     colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
@@ -41,7 +33,7 @@ export default function Timeline({ data }) {
     });
     return d;
   };
-  
+
   const Item = ({ item }) => {
     const even = item.rank % 2 == 0;
     return (
@@ -49,10 +41,12 @@ export default function Timeline({ data }) {
         style={[
           styles.tile,
           { transform: [{ rotateX: even ? "-30deg" : "30deg" }] },
-          themeContainerStyle
+          themeContainerStyle,
         ]}
       >
-        <Text style={[styles.tiletext,themeTextStyle]}>{`${item.remark}`}</Text>
+        <Text
+          style={[styles.tiletext, themeTextStyle]}
+        >{`${item.remark}`}</Text>
 
         <View style={{ alignSelf: "flex-start" }}>
           <Text style={styles.tiletextsmall}>{item.date}</Text>
@@ -61,19 +55,20 @@ export default function Timeline({ data }) {
         <View
           style={[
             styles.points,
-            { transform: [{ rotateX: !even ? "-10deg" : "10deg" }] },
-            themeStyle
+            themeStyle,
           ]}
         >
-          <Text style={[styles.pointsText,themeTextStyle]}>{item.points}</Text>
+          <Text style={[styles.pointsText, themeTextStyle]}>{item.points}</Text>
         </View>
       </View>
     );
   };
 
   return (
-    <View style={[styles.container,themeStyle]}>
-      {data?.timeline && data.timeline.length > 0 && <Text style={[styles.title,themeTextStyle]}>Contributions</Text>}
+    <View style={[styles.container, themeStyle]}>
+      {data?.timeline && data.timeline.length > 0 && (
+        <Text style={[styles.title, themeTextStyle]}>Contributions</Text>
+      )}
       {!data?.timeline ? (
         <Loader />
       ) : (
@@ -93,7 +88,7 @@ export default function Timeline({ data }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: '10%',
+    paddingBottom: "10%",
     paddingHorizontal: wp("5%"),
   },
   tile: {
@@ -106,8 +101,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginLeft: 20,
     marginRight: 20,
-    // borderColor: "blue",
-    // borderWidth: 1,
   },
   title: {
     textAlign: "left",
@@ -116,21 +109,17 @@ const styles = StyleSheet.create({
     marginVertical: hp("2%"),
   },
   points: {
-    // backgroundColor: "#000",
     padding: 15,
-    borderRadius: wp("100%"),
+    borderRadius: 10,
     elevation: 20,
-    // borderColor: "#7fffbd",
     borderWidth: 1,
   },
   pointsText: {
-    // color: "#7fffbd",
     fontSize: 15,
   },
   tiletext: {
-    fontSize: hp('2%'),
+    fontSize: hp("2%"),
     flexWrap: "wrap",
-    // fontWeight: "bold",
     margin: 0,
   },
   tiletextsmall: {
@@ -151,7 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#182C61",
   },
   lightContainerColor: {
-    backgroundColor: "#26de81",
+    backgroundColor: "#7fffbd",
   },
   darkContainerColor: {
     backgroundColor: "#3B3B98",

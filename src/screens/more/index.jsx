@@ -7,7 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import { useAuth } from '../../provider/authManager';
 
-export default function More({navigation}){
+export default function More(){
     const { logout } = useAuth();
 
     return(
@@ -18,12 +18,12 @@ export default function More({navigation}){
                     <Text style={styles.optionName}>Change Organization</Text>
                 </View>
             </TouchableOpacity> */}
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
                 <View style={styles.optionBox}>
                     <Ionicons name="color-palette-outline" size={hp('4%')} /> 
                     <Text style={styles.optionName}>Change Theme</Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={()=>logout()}>
                 <View style={styles.optionBox}>
                     <Ionicons name="log-out-outline" size={hp('4%')} /> 

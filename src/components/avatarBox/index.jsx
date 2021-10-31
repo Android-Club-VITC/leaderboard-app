@@ -72,14 +72,14 @@ const AvatarBox = ({ name, profilePicture, handleEdit, showEdit=true}) => {
         </View>
         <View style={styles.AvatarContainer}>
           <SvgUri uri={profilePicture} style={styles.avatar}/>
-          <View style={styles.editContainer}>
-            {showEdit && <Ionicons
+          {showEdit && <View style={styles.editContainer}>
+            <Ionicons
               name="create-outline"
               size={hp("3%")}
               color="#000"
               style={{ textAlign: "center" }}
-            />}
-          </View>
+            />
+          </View>}
         </View>
         {!editable ? (
           <Text

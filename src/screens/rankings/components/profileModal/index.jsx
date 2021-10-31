@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
-  Text,
+  SafeAreaView,
   View,
   Modal,
   Pressable,
   ScrollView,
+  Appearance
 } from "react-native";
 
 import {
@@ -63,6 +64,14 @@ function Profile({ userData }) {
 }
 
 export default function ProfileModal({ modalVisible, setModalVisible, data }) {
+  const colorScheme = Appearance.getColorScheme();
+  const themeStyle =
+    colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle =
+    colorScheme === "light"
+      ? styles.lightThemeTextColor
+      : styles.darkThemeTextColor;
+  
   return (
     <Modal
       animationType="slide"
@@ -72,8 +81,8 @@ export default function ProfileModal({ modalVisible, setModalVisible, data }) {
         setModalVisible(!modalVisible);
       }}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
+      <SafeAreaView style={styles.centeredView}>
+        <View style={[styles.modalView,themeStyle]}>
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => setModalVisible(!modalVisible)}
@@ -82,11 +91,12 @@ export default function ProfileModal({ modalVisible, setModalVisible, data }) {
               // style={{ marginLeft: wp("2.3%") }}
               name={"close-outline"}
               size={hp("6%")}
+              style={themeTextStyle}
             />
           </Pressable>
           {modalVisible && <Profile userData={data} />}
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 }
@@ -96,7 +106,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  modalView: {
+    // backgroundColor: 'red'
+  },
   button: {
     alignSelf: "flex-end",
+  },
+  lightThemeTextColor: {
+    color: "#000000"
+  },
+  darkThemeTextColor: {
+    color: "#ffffff"
+  },
+  lightThemeColor: {
+    backgroundColor: "#26de81",
+  },
+  darkThemeColor: {
+    backgroundColor: "#3B3B98"
   },
 });

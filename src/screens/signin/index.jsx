@@ -8,6 +8,7 @@ import {
   Image,
   Modal,
   Pressable,
+  Appearance
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -49,8 +50,20 @@ export default function SignIn() {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [otpInputVisibility, setOtpInputVisibility] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [modalVisible, setModalVisible] = useState(false);
 
+  const colorScheme = Appearance.getColorScheme();
+  const themeStyle =
+    colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle =
+    colorScheme === "light"
+      ? styles.lightThemeTextColor
+      : styles.darkThemeTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? styles.lightContainerColor
+      : styles.darkContainerColor;
+  
   const { login } = useAuth();
 
   const loginHandler = async () => {
@@ -67,13 +80,13 @@ export default function SignIn() {
   };
 
   return (
-    <View style={styles.container}>
-      <RankListModal
+    <View style={[styles.container,themeStyle]}>
+      {/* <RankListModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-      />
-      <View style={{ marginTop: hp("25%") }}>
-        <Text style={styles.title}>SIGN IN</Text>
+      /> */}
+      <View>
+        <Text style={[styles.title,themeTextStyle]}>SIGN IN</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}
@@ -92,7 +105,7 @@ export default function SignIn() {
         ) : null}
 
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button,themeContainerStyle]}
           onPress={verifyEmail ? loginHandler : verifyEmailHandler}
           underlayColor="#fff"
         >
@@ -101,7 +114,7 @@ export default function SignIn() {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{ alignSelf: "flex-end" }}
         onPress={() => setModalVisible(true)}
         underlayColor="#fff"
@@ -110,32 +123,28 @@ export default function SignIn() {
           source={require("../../assets/ac_logo.png")}
           style={{ width: 80, height: 80 }}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   input: {
-    //height: hp("5%"),
     margin: hp("1%"),
     borderBottomWidth: hp("0.2%"),
     padding: 10,
-    // backgroundColor: "yellow",
   },
   container: {
     flex: 1,
     width: wp("100%"),
-    justifyContent: "space-between",
+    justifyContent: 'center',
     padding: wp("5%"),
-    // height: hp("100%"),
     // backgroundColor: "red",
   },
   arrow: {
     top: hp("2%"),
     right: hp("2.5%"),
   },
-
   title: {
     alignSelf: "center",
     fontSize: hp("5%"),
@@ -151,7 +160,6 @@ const styles = StyleSheet.create({
     marginTop: hp("2%"),
     marginBottom: hp("2%"),
   },
-
   buttonText: {
     color: "white",
     fontWeight: "bold",
@@ -159,5 +167,23 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: "center",
     color: "grey",
+  },
+  lightThemeTextColor: {
+    color: "#000000",
+  },
+  darkThemeTextColor: {
+    color: "#ffffff",
+  },
+  lightThemeColor: {
+    backgroundColor: "#ffffff",
+  },
+  darkThemeColor: {
+    backgroundColor: "#182C61",
+  },
+  lightContainerColor: {
+    backgroundColor: "#26de81",
+  },
+  darkContainerColor: {
+    backgroundColor: "#3B3B98",
   },
 });
