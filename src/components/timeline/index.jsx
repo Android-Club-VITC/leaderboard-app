@@ -49,9 +49,10 @@ export default function Timeline({ data }) {
         style={[
           styles.tile,
           { transform: [{ rotateX: even ? "-30deg" : "30deg" }] },
+          themeContainerStyle
         ]}
       >
-        <Text style={styles.tiletext}>{`${item.remark}`}</Text>
+        <Text style={[styles.tiletext,themeTextStyle]}>{`${item.remark}`}</Text>
 
         <View style={{ alignSelf: "flex-start" }}>
           <Text style={styles.tiletextsmall}>{item.date}</Text>
@@ -61,17 +62,18 @@ export default function Timeline({ data }) {
           style={[
             styles.points,
             { transform: [{ rotateX: !even ? "-10deg" : "10deg" }] },
+            themeStyle
           ]}
         >
-          <Text style={styles.pointsText}>{item.points}</Text>
+          <Text style={[styles.pointsText,themeTextStyle]}>{item.points}</Text>
         </View>
       </View>
     );
   };
 
   return (
-    <View style={[styles.container]}>
-      {data?.timeline && data.timeline.length > 0 && <Text style={styles.title}>Contributions</Text>}
+    <View style={[styles.container,themeStyle]}>
+      {data?.timeline && data.timeline.length > 0 && <Text style={[styles.title,themeTextStyle]}>Contributions</Text>}
       {!data?.timeline ? (
         <Loader />
       ) : (
@@ -91,12 +93,8 @@ export default function Timeline({ data }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7fffbd",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: hp("3%"),
-    borderRadius: 8,
-    elevation: 20,
+    paddingBottom: '10%',
+    paddingHorizontal: wp("5%"),
   },
   tile: {
     width: wp("60%"),
@@ -108,31 +106,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginLeft: 20,
     marginRight: 20,
-    borderColor: "blue",
-    borderWidth: 1,
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
   title: {
-    fontWeight: "bold",
-    fontSize: 24,
-    paddingVertical: 30,
+    textAlign: "left",
+    fontSize: hp("3%"),
+    paddingLeft: wp("4%"),
+    marginVertical: hp("2%"),
   },
   points: {
-    backgroundColor: "#000",
+    // backgroundColor: "#000",
     padding: 15,
     borderRadius: wp("100%"),
     elevation: 20,
-    borderColor: "#7fffbd",
+    // borderColor: "#7fffbd",
     borderWidth: 1,
   },
   pointsText: {
-    color: "#7fffbd",
+    // color: "#7fffbd",
     fontSize: 15,
   },
   tiletext: {
-    fontSize: 30,
-    color: "#342317",
+    fontSize: hp('2%'),
     flexWrap: "wrap",
-    fontWeight: "bold",
+    // fontWeight: "bold",
     margin: 0,
   },
   tiletextsmall: {

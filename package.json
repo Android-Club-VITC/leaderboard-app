@@ -31,7 +31,8 @@
     "react-native-svg": "12.1.1",
     "react-native-web": "~0.13.12",
     "victory-native": "^35.5.5",
-    "@react-native-masked-view/masked-view": "0.2.4"
+    "@react-native-masked-view/masked-view": "0.2.4",
+    "lottie-react-native": "4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
