@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import AvatarBox from "../../components/avatarBox";
 import SocialSection from "../../components/socialSection";
-import ContributionsSection from "../../components/contributionsSection";
+// import ContributionsSection from "../../components/contributionsSection";
 import Loader from "../../components/loader";
 import Timeline from "../../components/timeline";
 
-import { getUserInfoService, editSocialsService, editNameService, getContributionService } from "./services";
+import { getUserInfoService, editSocialsService, editNameService, getContributionService, randomisePfpService } from "./services";
 import { useAuth } from "../../provider/authManager";
 
 const Profile = () => {
@@ -21,6 +21,12 @@ const Profile = () => {
     getData(); 
   }
   
+  const handlePfpEdit = async () => {
+    setLoading(true);
+    await randomisePfpService(email);
+    getData(); 
+  }
+
   const handleSocialsEdit = async (obj) => {
     setLoading(true);
     await editSocialsService(email, obj);
@@ -49,7 +55,7 @@ const Profile = () => {
         <Loader />
       ) : (
         <ScrollView style={styles.scrollView}>
-          <AvatarBox name={data.name} profilePicture={data.avatar} handleEdit={handleNameEdit}/>
+          <AvatarBox name={data.name} profilePicture={data.avatar} handleEdit={handleNameEdit} handlePfpEdit={handlePfpEdit} />
           <SocialSection
             linkedin={data.socials?.linkedin}
             discord={data.socials?.discord}

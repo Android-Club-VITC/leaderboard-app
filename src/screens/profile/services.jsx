@@ -31,6 +31,16 @@ export const editNameService = async (email, name) => {
   }
 };
 
+export const randomisePfpService = async (email) => {
+  try{
+      const res = await axios.post(`${URL}/api/member/generateAvatar`, { email });
+      return res.data;
+  }catch(e){
+      console.log(e);
+      return {};
+  }
+}
+
 export const getContributionService = async (email) => {
   try {
     const res = await axios.post(`${URL}/api/member/getContribution`, {email});

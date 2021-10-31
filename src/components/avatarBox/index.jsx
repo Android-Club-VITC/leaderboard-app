@@ -14,7 +14,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { SvgUri } from "react-native-svg";
 
-const AvatarBox = ({ name, profilePicture, handleEdit, showEdit=true}) => {
+const AvatarBox = ({ name, profilePicture, handleEdit, handlePfpEdit, showEdit=true}) => {
   const [editName, setEditName] = useState(name);
   const [editable, setEditable] = useState(false);
   const colorScheme = Appearance.getColorScheme();
@@ -28,12 +28,11 @@ const AvatarBox = ({ name, profilePicture, handleEdit, showEdit=true}) => {
         handleEdit(editName);
       }
     }, [editable]);
-
-    const handleClose = () => {
-      setEditName(name);
-      setEditable(false);
-    };
   }
+  const handleClose = () => {
+    setEditName(name);
+    setEditable(false);
+  };
   return (
     <View style={[styles.container,themeStyle]}>
       <View style={[styles.AvatarOuterContainer,themeContainerStyle]}>
@@ -73,12 +72,14 @@ const AvatarBox = ({ name, profilePicture, handleEdit, showEdit=true}) => {
         <View style={styles.AvatarContainer}>
           <SvgUri uri={profilePicture} style={styles.avatar}/>
           {showEdit && <View style={styles.editContainer}>
+          <TouchableOpacity onPress={handlePfpEdit}>
             <Ionicons
-              name="create-outline"
+              name="repeat-outline"
               size={hp("3%")}
               color="#000"
               style={{ textAlign: "center" }}
             />
+          </TouchableOpacity>
           </View>}
         </View>
         {!editable ? (
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.2,
     width: wp("40%"),
     padding: 3,
+    textAlign: 'center',
   },
   nameText: {
     marginTop: 10,

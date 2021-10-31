@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Appearance
+  Appearance,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -13,7 +13,7 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
-function Socialsectionbox({ name, iconname, editable, setSocials}) {
+function Socialsectionbox({ name, iconname, editable, setSocials }) {
   const handleEdit = (v) => {
     setSocials((s) => {
       return { ...s, [iconname]: v };
@@ -21,14 +21,21 @@ function Socialsectionbox({ name, iconname, editable, setSocials}) {
   };
 
   const colorScheme = Appearance.getColorScheme();
-  const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
-  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
+  const themeStyle =
+    colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle =
+    colorScheme === "light"
+      ? styles.lightThemeTextColor
+      : styles.darkThemeTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? styles.lightContainerColor
+      : styles.darkContainerColor;
 
   return (
-    <View style={[styles.item,themeContainerStyle]}>
+    <View style={[styles.item, themeContainerStyle]}>
       <View style={styles.itemLeft}>
-        <View style={[styles.circle,themeStyle]}>
+        <View style={[styles.circle, themeStyle]}>
           <FontAwesome5
             // style={{ marginLeft: wp("2.3%") }}
             name={iconname}
@@ -38,9 +45,11 @@ function Socialsectionbox({ name, iconname, editable, setSocials}) {
         </View>
       </View>
       <View style={styles.itemRight}>
-        <Text style={[styles.itemText,themeTextStyle]}>{iconname.toUpperCase()}</Text>
+        <Text style={[styles.itemText, themeTextStyle]}>
+          {iconname.toUpperCase()}
+        </Text>
         {!editable ? (
-          <Text style={[styles.itemSubText,themeTextStyle]}>{name}</Text>
+          <Text style={[styles.itemSubText, themeTextStyle]}>{name}</Text>
         ) : (
           <TextInput
             style={styles.input}
@@ -59,11 +68,15 @@ export default function SocialSection({
   discord,
   github,
   handleEdit,
-  showEdit=true
+  showEdit = true,
 }) {
   const colorScheme = Appearance.getColorScheme();
-  const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
+  const themeStyle =
+    colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle =
+    colorScheme === "light"
+      ? styles.lightThemeTextColor
+      : styles.darkThemeTextColor;
 
   const [socials, setSocials] = useState({
     discord,
@@ -73,7 +86,20 @@ export default function SocialSection({
   });
   const [editable, setEditable] = useState(false);
 
-  if(showEdit) {
+  if (showEdit) {
+    useEffect(() => {
+      if (!editable) {
+        if (
+          socials.linkedin != linkedin ||
+          socials.discord != discord ||
+          socials.instagram != instagram ||
+          socials.github != github
+        ) {
+          handleEdit(socials);
+        }
+      }
+    }, [editable]);
+  }
   const handleClose = () => {
     setSocials({
       linkedin,
@@ -84,24 +110,10 @@ export default function SocialSection({
 
     setEditable(false);
   };
-
-  useEffect(() => {
-    if (!editable) {
-      if (
-        socials.linkedin != linkedin ||
-        socials.discord != discord ||
-        socials.instagram != instagram ||
-        socials.github != github
-      ) {
-        handleEdit(socials);
-      }
-    }
-  }, [editable]);
-  }
   return (
-    <View style={[styles.container,themeStyle]}>
+    <View style={[styles.container, themeStyle]}>
       <View style={styles.header}>
-        <Text style={[styles.title,themeTextStyle]}>Social</Text>
+        <Text style={[styles.title, themeTextStyle]}>Social</Text>
         <View
           style={{
             flexDirection: "row",
@@ -116,24 +128,25 @@ export default function SocialSection({
               style={{ paddingLeft: 10 }}
             >
               <Ionicons
-                // style={{ marginLeft: wp("2.3%") }}
                 name={"close-outline"}
                 size={hp("3%")}
                 style={themeTextStyle}
               />
             </TouchableOpacity>
           )}
-          {showEdit && <TouchableOpacity
-            onPress={() => setEditable(!editable)}
-            underlayColor="#fff"
-          >
-            <Ionicons
-              // style={{ marginLeft: wp("2.3%") }}
-              name={editable ? "checkmark-outline" : "create-outline"}
-              size={hp("3%")}
-              style={themeTextStyle}
-            />
-          </TouchableOpacity>}
+          {showEdit && (
+            <TouchableOpacity
+              onPress={() => setEditable(!editable)}
+              underlayColor="#fff"
+            >
+              <Ionicons
+                // style={{ marginLeft: wp("2.3%") }}
+                name={editable ? "checkmark-outline" : "create-outline"}
+                size={hp("3%")}
+                style={themeTextStyle}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       <View style={styles.itembox}>
@@ -239,27 +252,27 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   lightThemeTextColor: {
-    color: "#000000"
+    color: "#000000",
   },
   darkThemeTextColor: {
-    color: "#ffffff"
+    color: "#ffffff",
   },
   lightThemeColor: {
     backgroundColor: "#ffffff",
   },
   darkThemeColor: {
-    backgroundColor: "#182C61"
+    backgroundColor: "#182C61",
   },
   lightThemeColor2: {
     backgroundColor: "#ffffff",
   },
   darkThemeColor2: {
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
   },
   lightContainerColor: {
-    backgroundColor: "#7fffbd"
+    backgroundColor: "#7fffbd",
   },
   darkContainerColor: {
-    backgroundColor: "#3B3B98"
-  }
+    backgroundColor: "#3B3B98",
+  },
 });
