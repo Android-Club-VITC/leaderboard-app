@@ -123,6 +123,7 @@ export default function RankList({ navigation, setProfile }) {
           data={data}
           renderItem={Item}
           keyExtractor={(item) => item.id}
+          initialNumToRender={10}
         />
       )}
     </View>

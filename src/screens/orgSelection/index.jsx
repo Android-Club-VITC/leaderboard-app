@@ -24,7 +24,7 @@ export default function OrganizationSelection() {
            <TouchableOpacity
            key={i}
            onPress={() => handleClick(o)}
-           underlayColor="#fff"
+           
          >
           <View style={{...styles.pickerItem, borderColor: selectedOrg._id == o._id? "red": "#000"}}>
             <View style={styles.iconBox}>

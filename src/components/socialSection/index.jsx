@@ -151,25 +151,25 @@ export default function SocialSection({
       </View>
       <View style={styles.itembox}>
         <Socialsectionbox
-          name={discord}
+          name={socials.discord}
           iconname="discord"
           editable={editable & showEdit}
           setSocials={setSocials}
         />
         <Socialsectionbox
-          name={instagram}
+          name={socials.instagram}
           iconname="instagram"
           editable={editable & showEdit}
           setSocials={setSocials}
         />
         <Socialsectionbox
-          name={linkedin}
+          name={socials.linkedin}
           iconname="linkedin"
           editable={editable & showEdit}
           setSocials={setSocials}
         />
         <Socialsectionbox
-          name={github}
+          name={socials.github}
           iconname="github"
           editable={editable & showEdit}
           setSocials={setSocials}

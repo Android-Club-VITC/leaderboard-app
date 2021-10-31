@@ -41,10 +41,21 @@ export default function SplashScreen() {
           >
             <Text
               style={{
-                marginLeft: 10,
+                fontSize: width*0.05,
+                color: "black",
+                fontWeight: "bold",
+              }}
+              numberOfLines = {2}
+            >
+              Powered By
+            </Text>
+
+            <Text
+              style={{
                 fontSize: width*0.2,
                 color: "black",
                 fontWeight: "bold",
+                textAlign: "center"
               }}
               numberOfLines = {2}
             >
