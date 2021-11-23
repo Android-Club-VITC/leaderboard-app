@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import TopBar from "../../components/topBar";
 import RankList from "../../components/rankList";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import ProfileModal from "./components/profileModal";
 
@@ -12,9 +13,9 @@ const Rankings = ({navigation}) => {
   const handleProfile = (e) => {
     if (profile!=e) {
       setProfile(e)
-    } else [
+    } else {
       setModalVisible(true)
-    ]
+    }
   }
 
   useEffect(() => {
@@ -25,11 +26,11 @@ const Rankings = ({navigation}) => {
 
   
   return (
-    <View style={styles.container_outer}>
+    <SafeAreaView style={styles.container_outer}>
       <ProfileModal data={profile} modalVisible={modalVisible} setModalVisible={setModalVisible} />
-      <TopBar navigation={navigation} />
-      <RankList navigation={navigation} setProfile={handleProfile}/>
-    </View>
+      <TopBar navigation={navigation} setProfile={handleProfile}/>
+      {/* <RankList navigation={navigation} setProfile={handleProfile}/> */}
+    </SafeAreaView>
   );
 };
 export default Rankings;

@@ -6,8 +6,15 @@ import SocialSection from "../../components/socialSection";
 import Loader from "../../components/loader";
 import Timeline from "../../components/timeline";
 
-import { getUserInfoService, editSocialsService, editNameService, getContributionService, randomisePfpService } from "./services";
+import {
+  getUserInfoService,
+  editSocialsService,
+  editNameService,
+  getContributionService,
+  randomisePfpService,
+} from "./services";
 import { useAuth } from "../../provider/authManager";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
   const [data, setData] = useState({});
@@ -18,28 +25,28 @@ const Profile = () => {
   const handleNameEdit = async (name) => {
     setLoading(true);
     await editNameService(email, name);
-    getData(); 
-  }
-  
+    getData();
+  };
+
   const handlePfpEdit = async () => {
     setLoading(true);
     await randomisePfpService(email);
-    getData(); 
-  }
+    getData();
+  };
 
   const handleSocialsEdit = async (obj) => {
     setLoading(true);
     await editSocialsService(email, obj);
-    getData() 
-  }
+    getData();
+  };
 
   const getData = async () => {
     setLoading(true);
     //const res1 = await getUserInfoService(email);
-    const res = await getContributionService(email)
+    const res = await getContributionService(email);
     // console.warn(res);
     setData(res.member);
-    setContrib({timeline: res.timeline});
+    setContrib({ timeline: res.timeline });
   };
 
   useEffect(() => {
@@ -55,18 +62,25 @@ const Profile = () => {
       {loading ? (
         <Loader />
       ) : (
-        <ScrollView style={styles.scrollView}>
-          <AvatarBox name={data.name} profilePicture={data.avatar} handleEdit={handleNameEdit} handlePfpEdit={handlePfpEdit} />
-          <SocialSection
-            linkedin={data.socials?.linkedin}
-            discord={data.socials?.discord}
-            instagram={data.socials?.instagram}
-            github={data.socials?.github}
-            handleEdit={handleSocialsEdit}
-          />
-          <Timeline data={contrib} />
-          {/* <ContributionsSection /> */}
-        </ScrollView>
+        <SafeAreaView style={styles.scrollView}>
+          <ScrollView >
+            <AvatarBox
+              name={data.name}
+              profilePicture={data.avatar}
+              handleEdit={handleNameEdit}
+              handlePfpEdit={handlePfpEdit}
+            />
+            <SocialSection
+              linkedin={data.socials?.linkedin}
+              discord={data.socials?.discord}
+              instagram={data.socials?.instagram}
+              github={data.socials?.github}
+              handleEdit={handleSocialsEdit}
+            />
+            <Timeline data={contrib} />
+            {/* <ContributionsSection /> */}
+          </ScrollView>
+        </SafeAreaView>
       )}
     </>
   );

@@ -5,6 +5,7 @@ import SignIn from "./src/screens/signin";
 import SplashScreen from "./src/components/splashScreen";
 import { AuthProvider, useAuth, AuthContext } from "./src/provider/authManager";
 import RootStackNav from "./src/router/rootNav";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 function Home() {
   const { isLoggedIn } = useAuth();
@@ -20,7 +21,8 @@ function Home() {
   }, []);
 
   return (
-    <NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
       {loadSplash ? (
         <SplashScreen />
       ) : !isLoggedIn ? (
@@ -29,6 +31,8 @@ function Home() {
         <RootStackNav />
       )}
     </NavigationContainer>
+    </SafeAreaProvider>
+    
   );
 }
 

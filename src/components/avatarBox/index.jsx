@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Appearance
+  Appearance,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -13,14 +13,32 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 import { SvgUri } from "react-native-svg";
+import { useNavigation } from "@react-navigation/core";
 
-const AvatarBox = ({ name, profilePicture, handleEdit, handlePfpEdit, showEdit=true}) => {
+const AvatarBox = ({
+  name,
+  profilePicture,
+  handleEdit,
+  handlePfpEdit,
+  showEdit = true,
+}) => {
   const [editName, setEditName] = useState(name);
   const [editable, setEditable] = useState(false);
   const colorScheme = Appearance.getColorScheme();
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeTextColor : styles.darkThemeTextColor;
-  const themeStyle = colorScheme === 'light' ? styles.lightContainerColor2 : styles.darkContainerColor2;
-  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainerColor : styles.darkContainerColor;
+  const navigation = useNavigation();
+
+  const themeTextStyle =
+    colorScheme === "light"
+      ? styles.lightThemeTextColor
+      : styles.darkThemeTextColor;
+  const themeStyle =
+    colorScheme === "light"
+      ? styles.lightContainerColor2
+      : styles.darkContainerColor2;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? styles.lightContainerColor
+      : styles.darkContainerColor;
 
   if (showEdit) {
     useEffect(() => {
@@ -34,63 +52,81 @@ const AvatarBox = ({ name, profilePicture, handleEdit, handlePfpEdit, showEdit=t
     setEditable(false);
   };
   return (
-    <View style={[styles.container,themeStyle]}>
-      <View style={[styles.AvatarOuterContainer,themeContainerStyle]}>
+    <View style={[styles.container, themeStyle]}>
+      <View style={[styles.AvatarOuterContainer, themeContainerStyle]}>
         <View
           style={{
             width: wp("100%"),
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
+            alignItems: "center",
             flexDirection: "row",
             paddingTop: 5,
             paddingRight: 15,
           }}
         >
-          {editable && showEdit && (
-            <TouchableOpacity
-              onPress={() => handleClose()}
-              underlayColor="#fff"
-            >
+          {showEdit ? (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Ionicons
-                name={"close-outline"}
-                size={hp("3%")}
-                style={[themeTextStyle]}
+                name="arrow-back-outline"
+                size={hp("4%")}
+                style={[themeTextStyle, { paddingLeft: "4%" }]}
               />
             </TouchableOpacity>
-          )}
-          {showEdit && <TouchableOpacity
-            onPress={() => setEditable(!editable)}
-            underlayColor="#fff"
-            style={{ paddingLeft: 10 }}
+          ) : null}
+
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
           >
-            <Ionicons
-              name={editable ? "checkmark-outline" : "create-outline"}
-              size={hp("3%")}
-              style={[themeTextStyle]}
-            />
-          </TouchableOpacity>}
+            {editable && showEdit && (
+              <TouchableOpacity
+                onPress={() => handleClose()}
+                underlayColor="#fff"
+              >
+                <Ionicons
+                  name={"close-outline"}
+                  size={hp("3.5%")}
+                  style={[themeTextStyle]}
+                />
+              </TouchableOpacity>
+            )}
+            {showEdit && (
+              <TouchableOpacity
+                onPress={() => setEditable(!editable)}
+                underlayColor="#fff"
+                style={{ paddingLeft: 10 }}
+              >
+                <Ionicons
+                  name={editable ? "checkmark-outline" : "create-outline"}
+                  size={hp("3.5%")}
+                  style={[themeTextStyle]}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
         <View style={styles.AvatarContainer}>
-          <SvgUri uri={profilePicture} style={styles.avatar}/>
-          {showEdit && <View style={styles.editContainer}>
-          <TouchableOpacity onPress={handlePfpEdit}>
-            <Ionicons
-              name="repeat-outline"
-              size={hp("3%")}
-              color="#000"
-              style={{ textAlign: "center" }}
-            />
-          </TouchableOpacity>
-          </View>}
+          <SvgUri uri={profilePicture} style={styles.avatar} />
+          {showEdit && (
+            <View style={styles.editContainer}>
+              <TouchableOpacity onPress={handlePfpEdit}>
+                <Ionicons
+                  name="repeat-outline"
+                  size={hp("3%")}
+                  color="#000"
+                  style={{ textAlign: "center" }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
         {!editable ? (
-          <Text
-            style={[styles.nameText,themeTextStyle]}
-          >
-            {name}
-          </Text>
+          <Text style={[styles.nameText, themeTextStyle]}>{name}</Text>
         ) : (
           <TextInput
-            style={[styles.input,themeTextStyle]}
+            style={[styles.input, themeTextStyle]}
             onChangeText={setEditName}
             value={editName}
             placeholder={`enter name`}
@@ -136,7 +172,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: "center",
     borderColor: "#000",
-    borderWidth: 0.3
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+    borderBottomWidth: 0.3,
   },
   editAvatar: {
     position: "absolute",
@@ -144,15 +183,18 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   avatar: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   input: {
     marginTop: 15,
-    borderWidth: 0.2,
     width: wp("40%"),
     padding: 3,
-    textAlign: 'center',
+    textAlign: "center",
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+    borderBottomWidth: 0.3,
   },
   nameText: {
     marginTop: 10,
@@ -160,25 +202,23 @@ const styles = StyleSheet.create({
     fontSize: hp("3%"),
     fontWeight: "bold",
   },
-  iconColor: {
-
-  },
+  iconColor: {},
   lightThemeTextColor: {
-    color: "#000000"
+    color: "#000000",
   },
   darkThemeTextColor: {
-    color: "#ffffff"
+    color: "#ffffff",
   },
   lightContainerColor: {
-    backgroundColor: "#26de81",
+    backgroundColor: "#64e8a6",
   },
   darkContainerColor: {
-    backgroundColor: "#3B3B98"
+    backgroundColor: "#3B3B98",
   },
   lightContainerColor2: {
     backgroundColor: "#ffffff",
   },
   darkContainerColor2: {
-    backgroundColor: "#182C61"
-  }
+    backgroundColor: "#182C61",
+  },
 });

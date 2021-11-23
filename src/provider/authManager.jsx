@@ -40,8 +40,9 @@ export const AuthProvider = ({ children }) => {
   }, [orgs]);
 
   const login = async (verifiedEmail, otp) => {
-    setLoading(true);
+    
     try {
+      setLoading(true);
       const res = await axios.post(`${URL}/api/auth/login`, {
         email: verifiedEmail,
         otp,
@@ -57,11 +58,15 @@ export const AuthProvider = ({ children }) => {
         setToken(t);
         setOrgs(res.data.org);
       }
+      setLoading(false);
+      return res.status;
     } catch (e) {
       console.log(e);
       setIsLoggedIn(false);
+      setLoading(false);
+      return e;
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   const logout = async () => {

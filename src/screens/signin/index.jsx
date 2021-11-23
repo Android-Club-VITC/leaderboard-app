@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
-  Appearance
+  Appearance,
+  Alert
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -66,7 +67,19 @@ export default function SignIn() {
   const { login } = useAuth();
 
   const loginHandler = async () => {
-    await login(text, otp);
+    let res =await login(text, otp);
+    if(res != 200){
+      Alert.alert(
+        "Something Failed!",
+        "If this persists please contact your organization admin",
+        [
+          {
+            text: "Ok",
+            onPress: () => console.log("Ok"),
+          },
+        ]
+      )
+    }
   };
 
   const verifyEmailHandler = async () => {
@@ -110,7 +123,7 @@ export default function SignIn() {
           onPress={verifyEmail ? loginHandler : verifyEmailHandler}
           underlayColor="#fff"
         >
-          <Text style={styles.buttonText}>
+          <Text style={[styles.buttonText]}>
             {loading ? "Loading..." : verifyEmail ? "Sign In" : "Request OTP"}
           </Text>
         </TouchableOpacity>
@@ -162,7 +175,7 @@ const styles = StyleSheet.create({
     marginBottom: hp("2%"),
   },
   buttonText: {
-    color: "white",
+    color: '#fff',
     fontWeight: "bold",
   },
   text: {
@@ -183,7 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#182C61",
   },
   lightContainerColor: {
-    backgroundColor: "#26de81",
+    backgroundColor: "#64e8a6",
   },
   darkContainerColor: {
     backgroundColor: "#3B3B98",

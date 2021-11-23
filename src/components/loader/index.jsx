@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import AnimatedLoader from "react-native-animated-loader";
 
@@ -21,7 +21,6 @@ const Loader = () => {
         speed={1}
         loop={true}
       >
-        <Text>Doing something...</Text>
       </AnimatedLoader>
     </View>
   );

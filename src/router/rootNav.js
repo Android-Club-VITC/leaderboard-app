@@ -24,9 +24,7 @@ export default function RootStackNav() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: themeStyle,
-        headerTitleStyle: themeTextStyle,
-        headerTintColor: colorScheme === "dark" ? "#fff" : "#000",
+        headerShown: false,
       }}
     >
       <Stack.Screen name="Rankings" component={Rankings} />

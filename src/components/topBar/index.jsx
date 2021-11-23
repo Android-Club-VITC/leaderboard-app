@@ -14,7 +14,9 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { useAuth } from '../../provider/authManager';
 
-const TopBar = ({ navigation }) => {
+import RankList from "../rankList";
+
+const TopBar = ({ navigation, setProfile }) => {
   const { logout } = useAuth();
   const colorScheme = Appearance.getColorScheme();
   const themeStyle = colorScheme === 'light' ? styles.lightThemeColor : styles.darkThemeColor;
@@ -64,6 +66,7 @@ const TopBar = ({ navigation }) => {
           <Text style={[styles.text,themeTextStyle]}>Logout</Text>
         </View>
       </View>
+      <RankList setProfile={setProfile}/>
     </View>
   );
 };
@@ -71,17 +74,17 @@ export default TopBar;
 
 const styles = StyleSheet.create({
   topContainer: {
-    // backgroundColor: "#",
+    flex: 1,
   },
   topBar: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "stretch",
-    // backgroundColor: "#a0e7e1",
     borderBottomRightRadius: 70,
     paddingBottom: 20,
     paddingTop: 20,
+    elevation: 20,
   },
   title: {
     // bottom: hp("2%"),
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#182C61"
   },
   lightContainerColor: {
-    backgroundColor: "#26de81"
+    backgroundColor: "#64e8a6"
   },
   darkContainerColor: {
     backgroundColor: "#3B3B98"
