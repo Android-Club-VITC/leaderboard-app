@@ -15,7 +15,7 @@ const Loader = () => {
     <View style={styles.loader}>
       <AnimatedLoader
         visible={true}
-        overlayColor="rgba(255,255,255,0.75)"
+        overlayColor="rgba(255,255,255,0.8)"
         animationStyle={{ flex: 1 }}
         source={require("../../assets/loader.json")}
         speed={1}

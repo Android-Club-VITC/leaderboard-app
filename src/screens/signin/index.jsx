@@ -5,7 +5,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image,
   Modal,
   Pressable,
   Appearance
@@ -88,18 +87,20 @@ export default function SignIn() {
       <View>
         <Text style={[styles.title,themeTextStyle]}>SIGN IN</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input,themeTextStyle]}
           onChangeText={onChangeText}
           value={text}
           placeholder="E-Mail Address"
+          placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
         />
         {otpInputVisibility ? (
           <TextInput
             secureTextEntry={false}
-            style={styles.input}
+            style={[styles.input,themeTextStyle]}
             onChangeText={setOtp}
             value={otp}
             placeholder="OTP"
+            placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
             editable={verifyEmail}
           />
         ) : null}
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
   },
   darkThemeTextColor: {
     color: "#ffffff",
+    borderBottomColor: "#fff"
   },
   lightThemeColor: {
     backgroundColor: "#ffffff",

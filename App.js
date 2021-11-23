@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import SignIn from "./src/screens/signin";
-import OrgSelect from "./src/screens/orgSelection";
 import SplashScreen from "./src/components/splashScreen";
 import { AuthProvider, useAuth, AuthContext } from "./src/provider/authManager";
 import RootStackNav from "./src/router/rootNav";
@@ -22,14 +21,22 @@ function Home() {
 
   return (
     <NavigationContainer>
-      {loadSplash ? <SplashScreen /> :  !isLoggedIn ? <SignIn /> : <RootStackNav />}
+      {loadSplash ? (
+        <SplashScreen />
+      ) : !isLoggedIn ? (
+        <SignIn />
+      ) : (
+        <RootStackNav />
+      )}
     </NavigationContainer>
   );
 }
 
 export default function App() {
   return (
-    <AuthProvider><Home /></AuthProvider>
+    <AuthProvider>
+      <Home />
+    </AuthProvider>
   );
 }
 

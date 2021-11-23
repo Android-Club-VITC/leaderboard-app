@@ -37,6 +37,7 @@ const Profile = () => {
     setLoading(true);
     //const res1 = await getUserInfoService(email);
     const res = await getContributionService(email)
+    // console.warn(res);
     setData(res.member);
     setContrib({timeline: res.timeline});
   };

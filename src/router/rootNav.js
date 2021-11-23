@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Appearance } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
+
 
 /*------------------screens---------------*/
 import Rankings from "../screens/rankings";
@@ -18,16 +20,13 @@ export default function RootStackNav() {
     colorScheme === "light"
       ? styles.lightThemeTextColor
       : styles.darkThemeTextColor;
-  const themeContainerStyle =
-    colorScheme === "light"
-      ? styles.lightContainerColor
-      : styles.darkContainerColor;
   
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: themeStyle,
         headerTitleStyle: themeTextStyle,
+        headerTintColor: colorScheme === "dark" ? "#fff" : "#000",
       }}
     >
       <Stack.Screen name="Rankings" component={Rankings} />
