@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     color: "#ffffff"
   },
   lightThemeColor: {
-    backgroundColor: "#26de81",
+    backgroundColor: "#64e8a6",
   },
   darkThemeColor: {
     backgroundColor: "#3B3B98"

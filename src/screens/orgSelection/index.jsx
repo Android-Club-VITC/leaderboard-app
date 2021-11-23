@@ -1,39 +1,90 @@
 import React from "react";
-import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import {
-  heightPercentageToDP,
-} from "react-native-responsive-screen";
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Appearance,
+} from "react-native";
+import { heightPercentageToDP } from "react-native-responsive-screen";
+import { Ionicons } from "@expo/vector-icons";
+
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/core";
 
 import { useAuth } from "../../provider/authManager";
 
 export default function OrganizationSelection() {
-  const { orgs, selectedOrg, setSelectedOrg } = useAuth()
-  
+  const { orgs, selectedOrg, setSelectedOrg } = useAuth();
+  const navigation = useNavigation();
+
+  const colorScheme = Appearance.getColorScheme();
+  const themeStyle =
+    colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle =
+    colorScheme === "light"
+      ? styles.lightThemeTextColor
+      : styles.darkThemeTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? styles.lightContainerColor
+      : styles.darkContainerColor;
+
   const handleClick = (org) => {
-    if(org._id != selectedOrg._id) {
+    if (org._id != selectedOrg._id) {
       setSelectedOrg(org);
     }
-  }
+  };
 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <Text style={styles.headerText}>Your Organizations</Text>
-        <View style={styles.picker}>
-          {orgs.map((o,i)=>
-           <TouchableOpacity
-           key={i}
-           onPress={() => handleClick(o)}
-           
-         >
-          <View style={{...styles.pickerItem, borderColor: selectedOrg._id == o._id? "red": "#000"}}>
-            <View style={styles.iconBox}>
-              <Text></Text>
-            </View>
-            <Text style={styles.orgName}>{o.name}</Text>
+      <View style={[styles.container, themeStyle]}>
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingBottom: "5%",
+          }}
+        >
+          <View
+            style={[
+              themeContainerStyle,
+              {
+                padding: "3%",
+                borderBottomRightRadius: 32,
+              },
+            ]}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="arrow-back-outline"
+                size={heightPercentageToDP("4%")}
+                style={themeTextStyle}
+              />
+            </TouchableOpacity>
           </View>
-          </TouchableOpacity>
-          )}
+
+          <Text style={[styles.headerText, themeTextStyle]}>
+            Your Organizations
+          </Text>
+        </View>
+
+        <View style={styles.picker}>
+          {orgs.map((o, i) => (
+            <TouchableOpacity key={i} onPress={() => handleClick(o)}>
+              <View
+                style={{
+                  ...styles.pickerItem,
+                  borderColor: selectedOrg._id == o._id ? "red" : "#000",
+                }}
+              >
+                <View style={styles.iconBox}>
+                  <Text></Text>
+                </View>
+                <Text style={styles.orgName}>{o.name}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
     </SafeAreaView>
@@ -42,8 +93,9 @@ export default function OrganizationSelection() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: "3%",
-    marginTop: heightPercentageToDP("10"),
+    // padding: "3%",
+    backgroundColor: "#fff",
+    height: "100%",
   },
   headerText: {
     // fontWeight: "200",
@@ -51,7 +103,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: heightPercentageToDP("5%"),
     fontWeight: "bold",
-    marginBottom: heightPercentageToDP("2%"),
   },
   picker: {
     // backgroundColor: "red",
@@ -70,8 +121,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: '#000',
-    elevation: 15
+    borderColor: "#000",
+    elevation: 15,
   },
   orgName: {
     //   backgroundColor: '#fff',
@@ -82,8 +133,32 @@ const styles = StyleSheet.create({
     height: "50%",
     width: "50%",
     borderRadius: 20,
-    marginTop: heightPercentageToDP('2.5'),
-    borderColor: '#000',
+    marginTop: heightPercentageToDP("2.5"),
+    borderColor: "#000",
     borderWidth: 1,
+  },
+  lightThemeTextColor: {
+    color: "#000000",
+  },
+  darkThemeTextColor: {
+    color: "#ffffff",
+  },
+  lightThemeColor: {
+    backgroundColor: "#ffffff",
+  },
+  darkThemeColor: {
+    backgroundColor: "#182C61",
+  },
+  lightThemeColor2: {
+    backgroundColor: "#ffffff",
+  },
+  darkThemeColor2: {
+    backgroundColor: "#ffffff",
+  },
+  lightContainerColor: {
+    backgroundColor: "#7fffbd",
+  },
+  darkContainerColor: {
+    backgroundColor: "#3B3B98",
   },
 });
