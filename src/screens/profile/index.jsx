@@ -16,11 +16,15 @@ import {
 import { useAuth } from "../../provider/authManager";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+//navigation
+import { useIsFocused } from "@react-navigation/native";
+
 const Profile = () => {
   const [data, setData] = useState({});
   const [contrib, setContrib] = useState({});
   const [loading, setLoading] = useState(false);
   const { email } = useAuth();
+  const isFocused = useIsFocused();
 
   const handleNameEdit = async (name) => {
     setLoading(true);
@@ -55,7 +59,7 @@ const Profile = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [isFocused]);
 
   return (
     <>

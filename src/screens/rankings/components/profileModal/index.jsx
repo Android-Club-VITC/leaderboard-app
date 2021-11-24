@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,59 +6,49 @@ import {
   Modal,
   Pressable,
   ScrollView,
-  Appearance
+  Appearance,
+  TouchableOpacity 
 } from "react-native";
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import AvatarBox from "../../../../components/avatarBox";
 import SocialSection from "../../../../components/socialSection";
-import Loader from "../../../../components/loader";
+
 import Timeline from "../../../../components/timeline";
 
-// service
-import { getUserInfoService, getUserContribService } from "../../services";
 
 function Profile({ userData }) {
-  const [data, setData] = useState({});
-  const [contrib, setContrib] = useState({});
-  
-  const getData = () => {
 
-    setData(userData?.member);
-    setContrib({timeline: userData?.timeline});
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  console.log(userData.timeline);
 
   return (
     <>
-        <ScrollView contentContainerStyle={{
-            paddingBottom: 40
-        }}>
-          <View style={{flex: 1, paddingBottom: 20}}>
+      <ScrollView
+        // contentContainerStyle={{
+        //   paddingBottom: 40,
+        // }}
+      >
+        <ScrollView style={{ flex: 1, paddingBottom: 20 }}>
           <AvatarBox
-            name={data.name}
-            profilePicture={data.avatar}
+            name={userData.member.name}
+            profilePicture={userData.member.avatar}
             showEdit={false}
           />
           <SocialSection
-            linkedin={data.socials?.linkedin}
-            discord={data.socials?.discord}
-            instagram={data.socials?.instagram}
-            github={data.socials?.github}
+            linkedin={userData.member.socials?.linkedin}
+            discord={userData.member.socials?.discord}
+            instagram={userData.member.socials?.instagram}
+            github={userData.member.socials?.github}
             showEdit={false}
           />
-          <Timeline data={contrib} />
-          {/* <ContributionsSection /> */}
-        </View>
+          <Timeline data={userData.timeline} />
         </ScrollView>
+      </ScrollView>
     </>
   );
 }
@@ -71,7 +61,7 @@ export default function ProfileModal({ modalVisible, setModalVisible, data }) {
     colorScheme === "light"
       ? styles.lightThemeTextColor
       : styles.darkThemeTextColor;
-  
+
   return (
     <Modal
       animationType="slide"
@@ -80,15 +70,15 @@ export default function ProfileModal({ modalVisible, setModalVisible, data }) {
       onRequestClose={() => {
         setModalVisible(!modalVisible);
       }}
+      propagateSwipe={true}
     >
-      <SafeAreaView style={styles.centeredView}>
-        <View style={[styles.modalView,themeStyle]}>
+      <SafeAreaView>
+        <View style={[styles.modalView, themeStyle]}>
           <Pressable
-            style={[styles.button, styles.buttonClose]}
+            style={styles.button}
             onPress={() => setModalVisible(!modalVisible)}
           >
             <Ionicons
-              // style={{ marginLeft: wp("2.3%") }}
               name={"close-outline"}
               size={hp("6%")}
               style={themeTextStyle}
@@ -113,15 +103,15 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   lightThemeTextColor: {
-    color: "#000000"
+    color: "#000000",
   },
   darkThemeTextColor: {
-    color: "#ffffff"
+    color: "#ffffff",
   },
   lightThemeColor: {
     backgroundColor: "#64e8a6",
   },
   darkThemeColor: {
-    backgroundColor: "#3B3B98"
+    backgroundColor: "#3B3B98",
   },
 });

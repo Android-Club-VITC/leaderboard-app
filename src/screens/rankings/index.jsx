@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import TopBar from "../../components/topBar";
-import RankList from "../../components/rankList";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import ProfileModal from "./components/profileModal";
+// import RankList from "../../components/rankList";
 
 const Rankings = ({navigation}) => {
   const [profile,setProfile] = useState("")

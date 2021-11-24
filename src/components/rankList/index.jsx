@@ -71,9 +71,11 @@ export default function RankList({ navigation, setProfile }) {
   }, [isFocused]);
 
   useEffect(() => {
-    if (isFocused && currOrg != selectedOrg._id) {
-      getData();
-    }
+    // if (isFocused && currOrg != selectedOrg._id) {
+    //   getData();
+      
+    // }
+    getData();
   }, [isFocused]);
 
   const RenderLine = ({ backgroundColor = "black" }) => {
