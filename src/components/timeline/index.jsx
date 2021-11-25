@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, Text, View, FlatList, Appearance } from "react-native";
 
 import {

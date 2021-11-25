@@ -24,16 +24,14 @@ import Timeline from "../../../../components/timeline";
 
 function Profile({ userData }) {
 
-  console.log(userData.timeline);
-
   return (
     <>
-      <ScrollView
+      <View
         // contentContainerStyle={{
         //   paddingBottom: 40,
         // }}
       >
-        <ScrollView style={{ flex: 1, paddingBottom: 20 }}>
+        <ScrollView style={{ paddingBottom: 0 }}>
           <AvatarBox
             name={userData.member.name}
             profilePicture={userData.member.avatar}
@@ -46,9 +44,9 @@ function Profile({ userData }) {
             github={userData.member.socials?.github}
             showEdit={false}
           />
-          <Timeline data={userData.timeline} />
+          <Timeline data={userData} />
         </ScrollView>
-      </ScrollView>
+      </View>
     </>
   );
 }
@@ -70,10 +68,9 @@ export default function ProfileModal({ modalVisible, setModalVisible, data }) {
       onRequestClose={() => {
         setModalVisible(!modalVisible);
       }}
-      propagateSwipe={true}
     >
       <SafeAreaView>
-        <View style={[styles.modalView, themeStyle]}>
+        <ScrollView style={[styles.modalView, themeStyle]}>
           <Pressable
             style={styles.button}
             onPress={() => setModalVisible(!modalVisible)}
@@ -85,7 +82,7 @@ export default function ProfileModal({ modalVisible, setModalVisible, data }) {
             />
           </Pressable>
           {modalVisible && <Profile userData={data} />}
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </Modal>
   );
@@ -93,7 +90,7 @@ export default function ProfileModal({ modalVisible, setModalVisible, data }) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#fff",
   },
   modalView: {
