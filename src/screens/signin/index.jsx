@@ -45,11 +45,10 @@ function RankListModal({ modalVisible, setModalVisible }) {
 }
 
 export default function SignIn() {
-  const [text, onChangeText] = useState();
-  const [verifyEmail, setVerifyEmail] = useState(false);
+  const [email,setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [otpInputVisibility, setOtpInputVisibility] = useState(false);
+  const [verifyEmail, setVerifyEmail] = useState(false);
   // const [modalVisible, setModalVisible] = useState(false);
 
   const colorScheme = Appearance.getColorScheme();
@@ -67,7 +66,7 @@ export default function SignIn() {
   const { login } = useAuth();
 
   const loginHandler = async () => {
-    let res =await login(text, otp);
+    let res =await login(email, otp);
     if(res != 200){
       Alert.alert(
         "Something Failed!",
@@ -83,63 +82,192 @@ export default function SignIn() {
   };
 
   const verifyEmailHandler = async () => {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if ( !re.test(email) ){
+      Alert.alert(
+        "Are you Fine?",
+        "Kindly Check your email",
+        [
+          {
+            text: "Ok",
+            onPress: () => console.log("Ok"),
+          },
+        ]
+      )
+      return;
+    }
     setLoading(true);
-    setOtpInputVisibility(true);
-    const res = await verifyEmailService(text);
+    const res = await verifyEmailService(email);
     if (res) setVerifyEmail(true);
-    else setVerifyEmail(false);
+    else {
+      setVerifyEmail(false);
+      Alert.alert(
+        "Something Failed!",
+        "Kindly Check your email",
+        [
+          {
+            text: "Ok",
+            onPress: () => console.log("Ok"),
+          },
+        ]
+      )
+    }
     setLoading(false);
   };
 
-  return (
-    <View style={[styles.container,themeStyle]}>
-      {/* <RankListModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      /> */}
-      <View>
-        <Text style={[styles.title,themeTextStyle]}>SIGN IN</Text>
-        <TextInput
-          style={[styles.input,themeTextStyle]}
-          onChangeText={onChangeText}
-          value={text}
-          placeholder="E-Mail Address"
-          placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
-        />
-        {otpInputVisibility ? (
-          <TextInput
-            secureTextEntry={false}
-            style={[styles.input,themeTextStyle]}
-            onChangeText={setOtp}
-            value={otp}
-            placeholder="OTP"
-            placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
-            editable={verifyEmail}
-          />
-        ) : null}
+   return (
+        <View style={{marginTop:0,flex:1}}>
+            <Welcome/>
+            {!verifyEmail && <Input email={email} setEmail={setEmail} setVerifyEmail={setVerifyEmail} verify={verifyEmailHandler} loading={loading}session="email"/>}
+            {verifyEmail && <Input email={email} otp={otp} setOtp={setOtp}  setVerifyEmail={setVerifyEmail} verify={loginHandler} session="otp"/>}
+        </View>
+    );
+  
+}
 
-        <TouchableOpacity
-          style={[styles.button,themeContainerStyle]}
-          onPress={verifyEmail ? loginHandler : verifyEmailHandler}
-          underlayColor="#fff"
-        >
-          <Text style={[styles.buttonText]}>
-            {loading ? "Loading..." : verifyEmail ? "Sign In" : "Request OTP"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {/* <TouchableOpacity
-        style={{ alignSelf: "flex-end" }}
-        onPress={() => setModalVisible(true)}
-        underlayColor="#fff"
-      >
-        <Image
-          source={require("../../assets/ac_logo.png")}
-          style={{ width: 80, height: 80 }}
-        />
-      </TouchableOpacity> */}
+function Welcome(){
+  return(
+    <View
+      style={{
+        width : "100%",
+        height : "50%",
+        backgroundColor:'#43F47F',
+        borderBottomRightRadius: 50,
+        paddingLeft:15,
+        justifyContent:'center'
+      }}
+    >
+      <Text
+        style={{
+          fontWeight:'bold',
+          fontSize: 40,
+          color: 'white',
+          paddingBottom:20
+        }}
+      >Welcome To ,
+      </Text>
+      <Text
+        style={{
+          fontWeight:'bold',
+          fontSize: 45,
+          color: 'white',
+        }}
+      >Leaderboard</Text>
+
     </View>
-  );
+  )
+}
+
+function Input(props){
+  return(
+    <View>
+        <Text
+            style={{
+            fontWeight:'bold',
+            fontSize:36,
+            marginVertical:20,
+            marginHorizontal:20,
+            }}
+        >Sign In</Text>
+        {props.session==="otp" &&
+            <Text
+                style={{
+                    fontSize:20,
+                    fontWeight:'bold',
+                    marginHorizontal:20,
+                    marginVertical:10
+                }}
+            >{props.email}</Text>
+        }
+        {props.session==="email"?
+            <InputField placeHolder="Email" value={props.email} setValue={props.setEmail}/>
+            :
+            <InputField placeHolder="OTP" value={props.otp} setValue={props.setOtp}/>
+        }
+      <TouchableOpacity
+        style={{
+          width:"90%",
+          height:40,
+          borderRadius:10,
+          backgroundColor:'#43F47F',
+          alignSelf: 'center',
+          justifyContent:'center',
+          marginTop:20
+        }}
+        onPress={()=>{
+            props.verify();
+        }}
+      >
+        <Text
+            style={{
+                textAlign:'center',
+                color:'white',
+                fontSize: 20,
+                fontWeight: 'bold'
+            }}
+        >{props.session==="email"?props.loading==true?"Sending OTP...":"Request OTP":"Verify"}</Text>
+        </TouchableOpacity>
+
+        {props.session==="otp" &&
+            <TouchableOpacity
+                style={{
+                    flexDirection:'row',
+                    height:40,
+                    borderRadius:10,
+                    backgroundColor:'#43F47F',
+                    marginTop:20,
+                    alignItems:'center',
+                    justifyContent:'flex-end',
+                    paddingHorizontal:10,
+                    marginHorizontal:20,
+                    alignSelf:'flex-end'
+                }}
+
+                onPress={()=>{props.setVerifyEmail(false)}}
+            >
+                <Text
+                    style={{
+                        color:'white',
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }}
+                >Wrong Email ?</Text>
+            </TouchableOpacity>
+        }
+
+    </View>
+  )
+}
+
+
+function InputField(props){
+  return(
+    <View
+      style={{
+        width:"100%",
+        justifyContent:'center',
+        alignItems:'center',
+      }}
+    >
+      <TextInput
+        style={{
+          borderWidth:2,
+          width:"90%",
+          height:50,
+          borderRadius:10,
+          paddingHorizontal:10,
+          fontWeight:'bold',
+          fontSize: 18,
+
+        }}
+        value = {props.value}
+        onChangeText = {(value)=>props.setValue(value)}
+        placeholder={props.placeHolder}
+      />
+      
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
