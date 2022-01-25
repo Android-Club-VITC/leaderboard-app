@@ -157,7 +157,7 @@ function Welcome(props){
       <Text
         style={{
           fontWeight:'bold',
-          fontSize: 40,
+          fontSize: hp("5%"),
           color: 'white',
           paddingBottom:20
         }}
@@ -166,7 +166,7 @@ function Welcome(props){
       <Text
         style={{
           fontWeight:'bold',
-          fontSize: 45,
+          fontSize: hp("8%"),
           color: 'white',
         }}
       >Leaderboard</Text>
@@ -181,18 +181,18 @@ function Input(props){
         <Text
             style={[{
               fontWeight:'bold',
-              fontSize:36,
-              marginVertical:20,
-              marginHorizontal:20,
+              fontSize:hp("5%"),
+              marginVertical:hp("3%"),
+              marginHorizontal:hp("3%"),
             },props.theme.textStyle]}
         >Sign In</Text>
         {props.session==="otp" &&
             <Text
                 style={[{
-                    fontSize:20,
+                    fontSize:hp("3%"),
                     fontWeight:'bold',
-                    marginHorizontal:20,
-                    marginVertical:10
+                    marginHorizontal:hp("3.5%"),
+                    marginVertical:hp("1%")
                 },props.theme.textStyle]}
             >{props.email}</Text>
         }
@@ -220,8 +220,8 @@ function Input(props){
                 <Text
                     style={{
                         color:'white',
-                        fontSize: 20,
-                        fontWeight: 'bold'
+                        fontSize: hp("3%"),
+                        fontWeight: 'bold',
                     }}
                 >Wrong Email ?</Text>
             </TouchableOpacity>
@@ -266,11 +266,9 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth:2,
     width:wp("90%"),
-    height:50,
-    // borderRadius:10,
-    // paddingHorizontal:10,
+    height:hp("6%"),
     fontWeight:'bold',
-    fontSize: 18,
+    fontSize: hp("3%"),
   },
   container: {
     flex: 1,
@@ -286,7 +284,7 @@ const styles = StyleSheet.create({
   
   button: {
     width:wp("90%"),
-    height:40,
+    height:hp("6%"),
     borderRadius:10,
     // backgroundColor:'#43F47F',
     alignSelf: 'center',
@@ -295,21 +293,21 @@ const styles = StyleSheet.create({
   },
   button2:{
     flexDirection:'row',
-    height:40,
+    height:hp("6%"),
     borderRadius:10,
-    // backgroundColor:'#43F47F',
     marginTop:20,
     alignItems:'center',
     justifyContent:'flex-end',
-    paddingHorizontal:10,
-    marginHorizontal:20,
+    paddingHorizontal:hp("4%"),
+    marginHorizontal:hp("4%"),
+    marginVertical:hp("4%"),
     alignSelf:'flex-end'
                 
   },
   buttonText: {
     textAlign:'center',
     color:'white',
-    fontSize: 20,
+    fontSize: hp("3.5%"),
     fontWeight: 'bold'
   },
   lightThemeTextColor: {
