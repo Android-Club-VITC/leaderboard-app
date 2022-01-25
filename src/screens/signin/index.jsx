@@ -8,7 +8,7 @@ import {
   Modal,
   Pressable,
   Appearance,
-  Alert
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -19,6 +19,8 @@ import PublicRankList from "./components/publicRankList";
 
 import { useAuth } from "../../provider/authManager";
 import { verifyEmailService,getAllContributionService } from "./services";
+
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function RankListModal({ modalVisible, setModalVisible }) {
   return (
@@ -65,7 +67,7 @@ export default function SignIn() {
   const { login } = useAuth();
 
   const loginHandler = async () => {
-    let res =await login(email, otp);
+    let res =await login(email.trim(), otp);
     if(res != 200){
       Alert.alert(
         "Something Failed!",
@@ -83,7 +85,7 @@ export default function SignIn() {
   const verifyEmailHandler = async () => {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if ( !re.test(email) ){
+    if ( !re.test(email.trim()) ){
       Alert.alert(
         "Are you Fine?",
         "Kindly Check your email",
@@ -97,7 +99,7 @@ export default function SignIn() {
       return;
     }
     setLoading(true);
-    const res = await verifyEmailService(email);
+    const res = await verifyEmailService(email.trim());
     if (res) setVerifyEmail(true);
     else {
       setVerifyEmail(false);
@@ -116,7 +118,9 @@ export default function SignIn() {
   };
 
    return (
-        <View style={[{marginTop:0,flex:1},themeStyle]}>
+        <KeyboardAwareScrollView
+          style={[{marginTop:0,flex:1},themeStyle]}
+        >
             <Welcome theme={theme}/>
 
             {!verifyEmail && 
@@ -142,7 +146,7 @@ export default function SignIn() {
                 theme={theme}
               />
             }
-        </View>
+        </KeyboardAwareScrollView>
     );
   
 }
