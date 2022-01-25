@@ -52,17 +52,16 @@ export default function SignIn() {
   // const [modalVisible, setModalVisible] = useState(false);
 
   const colorScheme = Appearance.getColorScheme();
-  const themeStyle =
-    colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
-  const themeTextStyle =
-    colorScheme === "light"
-      ? styles.lightThemeTextColor
-      : styles.darkThemeTextColor;
-  const themeContainerStyle =
-    colorScheme === "light"
-      ? styles.lightContainerColor
-      : styles.darkContainerColor;
+  const themeStyle = colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle = colorScheme === "light"? styles.lightThemeTextColor : styles.darkThemeTextColor;
+  const themeContainerStyle = colorScheme === "light" ? styles.lightContainerColor : styles.darkContainerColor;
   
+  const theme ={
+    theme:colorScheme,
+    style:themeStyle,
+    textStyle:themeTextStyle,
+    containerStyle:themeContainerStyle,
+  }
   const { login } = useAuth();
 
   const loginHandler = async () => {
@@ -117,27 +116,40 @@ export default function SignIn() {
   };
 
    return (
-        <View style={{marginTop:0,flex:1}}>
-            <Welcome/>
-            {!verifyEmail && <Input email={email} setEmail={setEmail} setVerifyEmail={setVerifyEmail} verify={verifyEmailHandler} loading={loading}session="email"/>}
-            {verifyEmail && <Input email={email} otp={otp} setOtp={setOtp}  setVerifyEmail={setVerifyEmail} verify={loginHandler} session="otp"/>}
+        <View style={[{marginTop:0,flex:1},themeStyle]}>
+            <Welcome theme={theme}/>
+
+            {!verifyEmail && 
+              <Input 
+                email={email} 
+                setEmail={setEmail} 
+                setVerifyEmail={setVerifyEmail} 
+                verify={verifyEmailHandler} 
+                loading={loading} 
+                session="email"
+                theme={theme}
+              />
+            }
+
+            {verifyEmail && 
+              <Input 
+                email={email} 
+                otp={otp} 
+                setOtp={setOtp}  
+                setVerifyEmail={setVerifyEmail} 
+                verify={loginHandler} 
+                session="otp"
+                theme={theme}
+              />
+            }
         </View>
     );
   
 }
 
-function Welcome(){
+function Welcome(props){
   return(
-    <View
-      style={{
-        width : "100%",
-        height : "50%",
-        backgroundColor:'#43F47F',
-        borderBottomRightRadius: 50,
-        paddingLeft:15,
-        justifyContent:'center'
-      }}
-    >
+    <View style={[styles.topContainer,props.theme.containerStyle]}>
       <Text
         style={{
           fontWeight:'bold',
@@ -163,67 +175,42 @@ function Input(props){
   return(
     <View>
         <Text
-            style={{
-            fontWeight:'bold',
-            fontSize:36,
-            marginVertical:20,
-            marginHorizontal:20,
-            }}
+            style={[{
+              fontWeight:'bold',
+              fontSize:36,
+              marginVertical:20,
+              marginHorizontal:20,
+            },props.theme.textStyle]}
         >Sign In</Text>
         {props.session==="otp" &&
             <Text
-                style={{
+                style={[{
                     fontSize:20,
                     fontWeight:'bold',
                     marginHorizontal:20,
                     marginVertical:10
-                }}
+                },props.theme.textStyle]}
             >{props.email}</Text>
         }
         {props.session==="email"?
-            <InputField placeHolder="Email" value={props.email} setValue={props.setEmail}/>
+            <InputField placeHolder="Email" value={props.email} setValue={props.setEmail} theme={props.theme}/>
             :
-            <InputField placeHolder="OTP" value={props.otp} setValue={props.setOtp}/>
+            <InputField placeHolder="OTP" value={props.otp} setValue={props.setOtp} theme={props.theme}/>
         }
       <TouchableOpacity
-        style={{
-          width:"90%",
-          height:40,
-          borderRadius:10,
-          backgroundColor:'#43F47F',
-          alignSelf: 'center',
-          justifyContent:'center',
-          marginTop:20
-        }}
+        style={[styles.button,props.theme.containerStyle]}
         onPress={()=>{
             props.verify();
         }}
       >
         <Text
-            style={{
-                textAlign:'center',
-                color:'white',
-                fontSize: 20,
-                fontWeight: 'bold'
-            }}
+            style={styles.buttonText}
         >{props.session==="email"?props.loading==true?"Sending OTP...":"Request OTP":"Verify"}</Text>
         </TouchableOpacity>
 
         {props.session==="otp" &&
             <TouchableOpacity
-                style={{
-                    flexDirection:'row',
-                    height:40,
-                    borderRadius:10,
-                    backgroundColor:'#43F47F',
-                    marginTop:20,
-                    alignItems:'center',
-                    justifyContent:'flex-end',
-                    paddingHorizontal:10,
-                    marginHorizontal:20,
-                    alignSelf:'flex-end'
-                }}
-
+                style={[styles.button2,props.theme.containerStyle]}
                 onPress={()=>{props.setVerifyEmail(false)}}
             >
                 <Text
@@ -244,26 +231,14 @@ function Input(props){
 function InputField(props){
   return(
     <View
-      style={{
-        width:"100%",
-        justifyContent:'center',
-        alignItems:'center',
-      }}
+      style={[styles.inputContainer]}
     >
       <TextInput
-        style={{
-          borderWidth:2,
-          width:"90%",
-          height:50,
-          borderRadius:10,
-          paddingHorizontal:10,
-          fontWeight:'bold',
-          fontSize: 18,
-
-        }}
+        style={[styles.input,props.theme.textStyle]}
         value = {props.value}
         onChangeText = {(value)=>props.setValue(value)}
         placeholder={props.placeHolder}
+        placeholderTextColor={props.theme.theme === "light" ? "grey" : "#fff"}
       />
       
     </View>
@@ -271,10 +246,27 @@ function InputField(props){
 }
 
 const styles = StyleSheet.create({
+  topContainer:{
+    width : wp("100%"),
+    height : hp("50%"),
+    backgroundColor:'#43F47F',
+    borderBottomRightRadius: 50,
+    paddingLeft:15,
+    justifyContent:'center'     
+  },
+  inputContainer:{
+    width:wp("100%"),
+    justifyContent:'center',
+    alignItems:'center',
+  },
   input: {
-    margin: hp("1%"),
-    borderBottomWidth: hp("0.2%"),
-    padding: 10,
+    borderBottomWidth:2,
+    width:wp("90%"),
+    height:50,
+    // borderRadius:10,
+    // paddingHorizontal:10,
+    fontWeight:'bold',
+    fontSize: 18,
   },
   container: {
     flex: 1,
@@ -287,28 +279,34 @@ const styles = StyleSheet.create({
     top: hp("2%"),
     right: hp("2.5%"),
   },
-  title: {
-    alignSelf: "center",
-    fontSize: hp("5%"),
-    fontWeight: "bold",
-    marginBottom: hp("2%"),
-  },
+  
   button: {
-    backgroundColor: "black",
-    borderRadius: wp("20%"),
-    alignItems: "center",
-    height: hp("5%"),
-    justifyContent: "center",
-    marginTop: hp("2%"),
-    marginBottom: hp("2%"),
+    width:wp("90%"),
+    height:40,
+    borderRadius:10,
+    // backgroundColor:'#43F47F',
+    alignSelf: 'center',
+    justifyContent:'center',
+    marginTop:20,
+  },
+  button2:{
+    flexDirection:'row',
+    height:40,
+    borderRadius:10,
+    // backgroundColor:'#43F47F',
+    marginTop:20,
+    alignItems:'center',
+    justifyContent:'flex-end',
+    paddingHorizontal:10,
+    marginHorizontal:20,
+    alignSelf:'flex-end'
+                
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: "bold",
-  },
-  text: {
-    alignSelf: "center",
-    color: "grey",
+    textAlign:'center',
+    color:'white',
+    fontSize: 20,
+    fontWeight: 'bold'
   },
   lightThemeTextColor: {
     color: "#000000",
