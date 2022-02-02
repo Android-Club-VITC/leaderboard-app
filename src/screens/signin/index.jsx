@@ -8,7 +8,7 @@ import {
   Modal,
   Pressable,
   Appearance,
-  Alert
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -19,6 +19,8 @@ import PublicRankList from "./components/publicRankList";
 
 import { useAuth } from "../../provider/authManager";
 import { verifyEmailService,getAllContributionService } from "./services";
+
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function RankListModal({ modalVisible, setModalVisible }) {
   return (
@@ -45,29 +47,27 @@ function RankListModal({ modalVisible, setModalVisible }) {
 }
 
 export default function SignIn() {
-  const [text, onChangeText] = useState();
-  const [verifyEmail, setVerifyEmail] = useState(false);
+  const [email,setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [otpInputVisibility, setOtpInputVisibility] = useState(false);
+  const [verifyEmail, setVerifyEmail] = useState(false);
   // const [modalVisible, setModalVisible] = useState(false);
 
   const colorScheme = Appearance.getColorScheme();
-  const themeStyle =
-    colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
-  const themeTextStyle =
-    colorScheme === "light"
-      ? styles.lightThemeTextColor
-      : styles.darkThemeTextColor;
-  const themeContainerStyle =
-    colorScheme === "light"
-      ? styles.lightContainerColor
-      : styles.darkContainerColor;
+  const themeStyle = colorScheme === "light" ? styles.lightThemeColor : styles.darkThemeColor;
+  const themeTextStyle = colorScheme === "light"? styles.lightThemeTextColor : styles.darkThemeTextColor;
+  const themeContainerStyle = colorScheme === "light" ? styles.lightContainerColor : styles.darkContainerColor;
   
+  const theme ={
+    theme:colorScheme,
+    style:themeStyle,
+    textStyle:themeTextStyle,
+    containerStyle:themeContainerStyle,
+  }
   const { login } = useAuth();
 
   const loginHandler = async () => {
-    let res =await login(text, otp);
+    let res =await login(email.trim(), otp);
     if(res != 200){
       Alert.alert(
         "Something Failed!",
@@ -83,70 +83,192 @@ export default function SignIn() {
   };
 
   const verifyEmailHandler = async () => {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if ( !re.test(email.trim()) ){
+      Alert.alert(
+        "Are you Fine?",
+        "Kindly Check your email",
+        [
+          {
+            text: "Ok",
+            onPress: () => console.log("Ok"),
+          },
+        ]
+      )
+      return;
+    }
     setLoading(true);
-    setOtpInputVisibility(true);
-    const res = await verifyEmailService(text);
+    const res = await verifyEmailService(email.trim());
     if (res) setVerifyEmail(true);
-    else setVerifyEmail(false);
+    else {
+      setVerifyEmail(false);
+      Alert.alert(
+        "Something Failed!",
+        "Kindly Check your email",
+        [
+          {
+            text: "Ok",
+            onPress: () => console.log("Ok"),
+          },
+        ]
+      )
+    }
     setLoading(false);
   };
 
-  return (
-    <View style={[styles.container,themeStyle]}>
-      {/* <RankListModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      /> */}
-      <View>
-        <Text style={[styles.title,themeTextStyle]}>SIGN IN</Text>
-        <TextInput
-          style={[styles.input,themeTextStyle]}
-          onChangeText={onChangeText}
-          value={text}
-          placeholder="E-Mail Address"
-          placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
-        />
-        {otpInputVisibility ? (
-          <TextInput
-            secureTextEntry={false}
-            style={[styles.input,themeTextStyle]}
-            onChangeText={setOtp}
-            value={otp}
-            placeholder="OTP"
-            placeholderTextColor={colorScheme === "light" ? "#000" : "#fff"}
-            editable={verifyEmail}
-          />
-        ) : null}
-
-        <TouchableOpacity
-          style={[styles.button,themeContainerStyle]}
-          onPress={verifyEmail ? loginHandler : verifyEmailHandler}
-          underlayColor="#fff"
+   return (
+        <KeyboardAwareScrollView
+          style={[{marginTop:0,flex:1},themeStyle]}
         >
-          <Text style={[styles.buttonText]}>
-            {loading ? "Loading..." : verifyEmail ? "Sign In" : "Request OTP"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {/* <TouchableOpacity
-        style={{ alignSelf: "flex-end" }}
-        onPress={() => setModalVisible(true)}
-        underlayColor="#fff"
-      >
-        <Image
-          source={require("../../assets/ac_logo.png")}
-          style={{ width: 80, height: 80 }}
-        />
-      </TouchableOpacity> */}
+            <Welcome theme={theme}/>
+
+            {!verifyEmail && 
+              <Input 
+                email={email} 
+                setEmail={setEmail} 
+                setVerifyEmail={setVerifyEmail} 
+                verify={verifyEmailHandler} 
+                loading={loading} 
+                session="email"
+                theme={theme}
+              />
+            }
+
+            {verifyEmail && 
+              <Input 
+                email={email} 
+                otp={otp} 
+                setOtp={setOtp}  
+                setVerifyEmail={setVerifyEmail} 
+                verify={loginHandler} 
+                session="otp"
+                theme={theme}
+              />
+            }
+        </KeyboardAwareScrollView>
+    );
+  
+}
+
+function Welcome(props){
+  return(
+    <View style={[styles.topContainer,props.theme.containerStyle]}>
+      <Text
+        style={{
+          fontWeight:'bold',
+          fontSize: hp("5%"),
+          color: 'white',
+          paddingBottom:20
+        }}
+      >Welcome To ,
+      </Text>
+      <Text
+        style={{
+          fontWeight:'bold',
+          fontSize: hp("8%"),
+          color: 'white',
+        }}
+      >Leaderboard</Text>
+
     </View>
-  );
+  )
+}
+
+function Input(props){
+  return(
+    <View>
+        <Text
+            style={[{
+              fontWeight:'bold',
+              fontSize:hp("5%"),
+              marginVertical:hp("3%"),
+              marginHorizontal:hp("3%"),
+            },props.theme.textStyle]}
+        >Sign In</Text>
+        {props.session==="otp" &&
+            <Text
+                style={[{
+                    fontSize:hp("3%"),
+                    fontWeight:'bold',
+                    marginHorizontal:hp("3.5%"),
+                    marginVertical:hp("1%")
+                },props.theme.textStyle]}
+            >{props.email}</Text>
+        }
+        {props.session==="email"?
+            <InputField placeHolder="Email" value={props.email} setValue={props.setEmail} theme={props.theme}/>
+            :
+            <InputField placeHolder="OTP" value={props.otp} setValue={props.setOtp} theme={props.theme}/>
+        }
+      <TouchableOpacity
+        style={[styles.button,props.theme.containerStyle]}
+        onPress={()=>{
+            props.verify();
+        }}
+      >
+        <Text
+            style={styles.buttonText}
+        >{props.session==="email"?props.loading==true?"Sending OTP...":"Request OTP":"Verify"}</Text>
+        </TouchableOpacity>
+
+        {props.session==="otp" &&
+            <TouchableOpacity
+                style={[styles.button2,props.theme.containerStyle]}
+                onPress={()=>{props.setVerifyEmail(false)}}
+            >
+                <Text
+                    style={{
+                        color:'white',
+                        fontSize: hp("3%"),
+                        fontWeight: 'bold',
+                    }}
+                >Wrong Email ?</Text>
+            </TouchableOpacity>
+        }
+
+    </View>
+  )
+}
+
+
+function InputField(props){
+  return(
+    <View
+      style={[styles.inputContainer]}
+    >
+      <TextInput
+        style={[styles.input,props.theme.textStyle]}
+        value = {props.value}
+        onChangeText = {(value)=>props.setValue(value)}
+        placeholder={props.placeHolder}
+        placeholderTextColor={props.theme.theme === "light" ? "grey" : "#fff"}
+      />
+      
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
+  topContainer:{
+    width : wp("100%"),
+    height : hp("50%"),
+    backgroundColor:'#43F47F',
+    borderBottomRightRadius: 50,
+    paddingLeft:15,
+    justifyContent:'center'     
+  },
+  inputContainer:{
+    width:wp("100%"),
+    justifyContent:'center',
+    alignItems:'center',
+  },
   input: {
-    margin: hp("1%"),
-    borderBottomWidth: hp("0.2%"),
-    padding: 10,
+    borderBottomWidth:2,
+    width:wp("90%"),
+    height:hp("6%"),
+    fontWeight:'bold',
+    fontSize: hp("3%"),
   },
   container: {
     flex: 1,
@@ -159,28 +281,34 @@ const styles = StyleSheet.create({
     top: hp("2%"),
     right: hp("2.5%"),
   },
-  title: {
-    alignSelf: "center",
-    fontSize: hp("5%"),
-    fontWeight: "bold",
-    marginBottom: hp("2%"),
-  },
+  
   button: {
-    backgroundColor: "black",
-    borderRadius: wp("20%"),
-    alignItems: "center",
-    height: hp("5%"),
-    justifyContent: "center",
-    marginTop: hp("2%"),
-    marginBottom: hp("2%"),
+    width:wp("90%"),
+    height:hp("6%"),
+    borderRadius:10,
+    // backgroundColor:'#43F47F',
+    alignSelf: 'center',
+    justifyContent:'center',
+    marginTop:20,
+  },
+  button2:{
+    flexDirection:'row',
+    height:hp("6%"),
+    borderRadius:10,
+    marginTop:20,
+    alignItems:'center',
+    justifyContent:'flex-end',
+    paddingHorizontal:hp("4%"),
+    marginHorizontal:hp("4%"),
+    marginVertical:hp("4%"),
+    alignSelf:'flex-end'
+                
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: "bold",
-  },
-  text: {
-    alignSelf: "center",
-    color: "grey",
+    textAlign:'center',
+    color:'white',
+    fontSize: hp("3.5%"),
+    fontWeight: 'bold'
   },
   lightThemeTextColor: {
     color: "#000000",
